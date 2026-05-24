@@ -1,0 +1,11 @@
+d:\CloudShift\src\backend\CloudShift.Domain\bin\Debug\net8.0\CloudShift.Domain.deps.json
+d:\CloudShift\src\backend\CloudShift.Domain\bin\Debug\net8.0\CloudShift.Domain.dll
+d:\CloudShift\src\backend\CloudShift.Domain\bin\Debug\net8.0\CloudShift.Domain.pdb
+d:\CloudShift\src\backend\CloudShift.Domain\obj\Debug\net8.0\CloudShift.Domain.GeneratedMSBuildEditorConfig.editorconfig
+d:\CloudShift\src\backend\CloudShift.Domain\obj\Debug\net8.0\CloudShift.Domain.AssemblyInfoInputs.cache
+d:\CloudShift\src\backend\CloudShift.Domain\obj\Debug\net8.0\CloudShift.Domain.AssemblyInfo.cs
+d:\CloudShift\src\backend\CloudShift.Domain\obj\Debug\net8.0\CloudShift.Domain.csproj.CoreCompileInputs.cache
+d:\CloudShift\src\backend\CloudShift.Domain\obj\Debug\net8.0\CloudShift.Domain.dll
+d:\CloudShift\src\backend\CloudShift.Domain\obj\Debug\net8.0\refint\CloudShift.Domain.dll
+d:\CloudShift\src\backend\CloudShift.Domain\obj\Debug\net8.0\CloudShift.Domain.pdb
+d:\CloudShift\src\backend\CloudShift.Domain\obj\Debug\net8.0\ref\CloudShift.Domain.dll

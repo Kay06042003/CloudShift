@@ -1,0 +1,17 @@
+d:\CloudShift\src\backend\CloudShift.Infrastructure\bin\Debug\net8.0\CloudShift.Infrastructure.deps.json
+d:\CloudShift\src\backend\CloudShift.Infrastructure\bin\Debug\net8.0\CloudShift.Infrastructure.dll
+d:\CloudShift\src\backend\CloudShift.Infrastructure\bin\Debug\net8.0\CloudShift.Infrastructure.pdb
+d:\CloudShift\src\backend\CloudShift.Infrastructure\bin\Debug\net8.0\CloudShift.Application.dll
+d:\CloudShift\src\backend\CloudShift.Infrastructure\bin\Debug\net8.0\CloudShift.Domain.dll
+d:\CloudShift\src\backend\CloudShift.Infrastructure\bin\Debug\net8.0\CloudShift.Application.pdb
+d:\CloudShift\src\backend\CloudShift.Infrastructure\bin\Debug\net8.0\CloudShift.Domain.pdb
+d:\CloudShift\src\backend\CloudShift.Infrastructure\obj\Debug\net8.0\CloudShift.Infrastructure.csproj.AssemblyReference.cache
+d:\CloudShift\src\backend\CloudShift.Infrastructure\obj\Debug\net8.0\CloudShift.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+d:\CloudShift\src\backend\CloudShift.Infrastructure\obj\Debug\net8.0\CloudShift.Infrastructure.AssemblyInfoInputs.cache
+d:\CloudShift\src\backend\CloudShift.Infrastructure\obj\Debug\net8.0\CloudShift.Infrastructure.AssemblyInfo.cs
+d:\CloudShift\src\backend\CloudShift.Infrastructure\obj\Debug\net8.0\CloudShift.Infrastructure.csproj.CoreCompileInputs.cache
+d:\CloudShift\src\backend\CloudShift.Infrastructure\obj\Debug\net8.0\CloudShi.9FEF19F6.Up2Date
+d:\CloudShift\src\backend\CloudShift.Infrastructure\obj\Debug\net8.0\CloudShift.Infrastructure.dll
+d:\CloudShift\src\backend\CloudShift.Infrastructure\obj\Debug\net8.0\refint\CloudShift.Infrastructure.dll
+d:\CloudShift\src\backend\CloudShift.Infrastructure\obj\Debug\net8.0\CloudShift.Infrastructure.pdb
+d:\CloudShift\src\backend\CloudShift.Infrastructure\obj\Debug\net8.0\ref\CloudShift.Infrastructure.dll

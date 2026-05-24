@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E4BDDFF9-5F49-465A-BA1E-0E8587F07763}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{BAE575FA-75EE-4005-BABE-6E6112A59B73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudShift.Domain", "src\backend\CloudShift.Domain\CloudShift.Domain.csproj", "{4AC3503D-A2C8-47C2-9964-39317085E09C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudShift.Application", "src\backend\CloudShift.Application\CloudShift.Application.csproj", "{88B496D3-1799-4B9C-9692-EFFB903F2446}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudShift.Infrastructure", "src\backend\CloudShift.Infrastructure\CloudShift.Infrastructure.csproj", "{306DEC56-1933-4C31-B68A-3F2FC4BE7EE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudShift.Api", "src\backend\CloudShift.Api\CloudShift.Api.csproj", "{80BA9A20-5A20-48BA-BB06-0E0789E1EE5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudShift.Worker", "src\backend\CloudShift.Worker\CloudShift.Worker.csproj", "{EBD2AC4E-2006-4CFF-BFD2-4D925CE5789A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4AC3503D-A2C8-47C2-9964-39317085E09C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AC3503D-A2C8-47C2-9964-39317085E09C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AC3503D-A2C8-47C2-9964-39317085E09C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AC3503D-A2C8-47C2-9964-39317085E09C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88B496D3-1799-4B9C-9692-EFFB903F2446}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88B496D3-1799-4B9C-9692-EFFB903F2446}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88B496D3-1799-4B9C-9692-EFFB903F2446}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88B496D3-1799-4B9C-9692-EFFB903F2446}.Release|Any CPU.Build.0 = Release|Any CPU
+		{306DEC56-1933-4C31-B68A-3F2FC4BE7EE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{306DEC56-1933-4C31-B68A-3F2FC4BE7EE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{306DEC56-1933-4C31-B68A-3F2FC4BE7EE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{306DEC56-1933-4C31-B68A-3F2FC4BE7EE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80BA9A20-5A20-48BA-BB06-0E0789E1EE5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80BA9A20-5A20-48BA-BB06-0E0789E1EE5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80BA9A20-5A20-48BA-BB06-0E0789E1EE5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80BA9A20-5A20-48BA-BB06-0E0789E1EE5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBD2AC4E-2006-4CFF-BFD2-4D925CE5789A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBD2AC4E-2006-4CFF-BFD2-4D925CE5789A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBD2AC4E-2006-4CFF-BFD2-4D925CE5789A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBD2AC4E-2006-4CFF-BFD2-4D925CE5789A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BAE575FA-75EE-4005-BABE-6E6112A59B73} = {E4BDDFF9-5F49-465A-BA1E-0E8587F07763}
+		{4AC3503D-A2C8-47C2-9964-39317085E09C} = {BAE575FA-75EE-4005-BABE-6E6112A59B73}
+		{88B496D3-1799-4B9C-9692-EFFB903F2446} = {BAE575FA-75EE-4005-BABE-6E6112A59B73}
+		{306DEC56-1933-4C31-B68A-3F2FC4BE7EE3} = {BAE575FA-75EE-4005-BABE-6E6112A59B73}
+		{80BA9A20-5A20-48BA-BB06-0E0789E1EE5B} = {BAE575FA-75EE-4005-BABE-6E6112A59B73}
+		{EBD2AC4E-2006-4CFF-BFD2-4D925CE5789A} = {BAE575FA-75EE-4005-BABE-6E6112A59B73}
+	EndGlobalSection
+EndGlobal
