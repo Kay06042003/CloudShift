@@ -1,6 +1,9 @@
 using CloudShift.Application;
+using CloudShift.Domain.Entities;
 using CloudShift.Infrastructure;
+using CloudShift.Infrastructure.Data;
 using MassTransit;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +53,28 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await dbContext.Database.MigrateAsync();
+
+    var demoUserId = Guid.Parse("11111111-1111-1111-1111-111111111111");
+    if (!await dbContext.Users.AnyAsync(u => u.Id == demoUserId))
+    {
+        dbContext.Users.Add(new User
+        {
+            Id = demoUserId,
+            Email = "demo@cloudshift.local",
+            FirstName = "CloudShift",
+            LastName = "Demo",
+            CreatedAt = DateTime.UtcNow
+        });
+
+        await dbContext.SaveChangesAsync();
+    }
+}
 
 // ─── HTTP Pipeline ────────────────────────────────────────────────────────────
 if (app.Environment.IsDevelopment())

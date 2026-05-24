@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MockDataService } from '../../services/mock-data.service';
+import { AddProfileFormValue, CloudShiftApiService } from '../../services/cloudshift-api.service';
 import { IAppProfile } from '../../models/app-profile.model';
 import { ProfileCardComponent } from './profile-card/profile-card.component';
 import { AddProfileModalComponent } from './add-profile-modal/add-profile-modal.component';
@@ -145,7 +145,7 @@ import { StatusBadgeComponent } from '../../shared/components/status-badge/statu
     <app-add-profile-modal
       [isOpen]="showAddModal()"
       (close)="showAddModal.set(false)"
-      (profileAdded)="onProfileAdded()"
+      (profileAdded)="onProfileAdded($event)"
     />
   `,
   styles: [`
@@ -333,10 +333,10 @@ export class AppProfilesComponent implements OnInit {
     { value: 'error',  label: 'Error' },
   ];
 
-  constructor(private mockData: MockDataService) {}
+  constructor(private api: CloudShiftApiService) {}
 
   ngOnInit() {
-    this.profiles = this.mockData.getAppProfiles();
+    this.refresh();
   }
 
   get filteredProfiles(): IAppProfile[] {
@@ -368,10 +368,17 @@ export class AppProfilesComponent implements OnInit {
   }
 
   refresh() {
-    this.profiles = this.mockData.getAppProfiles();
+    this.api.getAppProfiles().subscribe({
+      next: profiles => this.profiles = profiles,
+      error: error => console.error('Failed to load app profiles', error)
+    });
   }
 
-  onProfileAdded() {
+  onProfileAdded(profile: AddProfileFormValue) {
+    this.api.addAppProfile(profile).subscribe({
+      next: () => this.refresh(),
+      error: error => console.error('Failed to add app profile', error)
+    });
     // In production: reload from API
     console.log('Profile added — would reload from API');
   }

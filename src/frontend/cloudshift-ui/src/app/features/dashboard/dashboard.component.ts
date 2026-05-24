@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MockDataService } from '../../services/mock-data.service';
+import { CloudShiftApiService } from '../../services/cloudshift-api.service';
 import { IDashboardStats, IFileLogEntry } from '../../models/dashboard.model';
 import { IMigrationJob } from '../../models/migration-job.model';
 import { StatCardComponent } from '../../shared/components/stat-card/stat-card.component';
@@ -310,37 +310,45 @@ import { ProgressBarComponent } from '../../shared/components/progress-bar/progr
   `]
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  stats!: IDashboardStats;
+  stats: IDashboardStats = {
+    totalFilesTransferred: 0,
+    failedFiles: 0,
+    totalDataMovedGB: 0,
+    activeJobs: 0,
+    completedJobsToday: 0,
+    successRate: 100
+  };
   logEntries: IFileLogEntry[] = [];
   activeJobs: IMigrationJob[] = [];
   lastUpdated = new Date();
   private intervalId?: ReturnType<typeof setInterval>;
 
-  constructor(private mockData: MockDataService) {}
+  constructor(private api: CloudShiftApiService) {}
 
   ngOnInit() {
-    this.stats = this.mockData.getDashboardStats();
-    this.logEntries = this.mockData.getFileLogEntries();
-    this.activeJobs = this.mockData.getMigrationJobs()
-      .filter(j => j.status === 'running' || j.status === 'paused');
+    this.reload();
 
-    // Simulate live updates
     this.intervalId = setInterval(() => {
       this.lastUpdated = new Date();
-      this.logEntries = [
-        {
-          id: `log-live-${Date.now()}`,
-          timestamp: new Date(),
-          fileName: ['report_latest.pdf', 'sync_delta.json', 'user_export.csv'][Math.floor(Math.random() * 3)],
-          filePath: '/shared/live/',
-          sizeKB: Math.floor(Math.random() * 10000) + 200,
-          status: 'transferred',
-          jobName: 'Backup Data 2023',
-          duration: Math.floor(Math.random() * 800) + 50
-        },
-        ...this.logEntries.slice(0, 19)
-      ];
+      this.reload();
     }, 3000);
+  }
+
+  reload() {
+    this.api.getDashboardStats().subscribe({
+      next: stats => this.stats = stats,
+      error: error => console.error('Failed to load dashboard stats', error)
+    });
+
+    this.api.getFileLogEntries().subscribe({
+      next: entries => this.logEntries = entries,
+      error: error => console.error('Failed to load file log entries', error)
+    });
+
+    this.api.getMigrationJobs().subscribe({
+      next: jobs => this.activeJobs = jobs.filter(j => j.status === 'running' || j.status === 'queued' || j.status === 'paused'),
+      error: error => console.error('Failed to load active jobs', error)
+    });
   }
 
   ngOnDestroy() {

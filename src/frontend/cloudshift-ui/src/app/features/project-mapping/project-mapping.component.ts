@@ -1,8 +1,9 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { MockDataService } from '../../services/mock-data.service';
-import { IProjectMapping } from '../../models/project-mapping.model';
+import { CloudShiftApiService, CreateMappingFormValue } from '../../services/cloudshift-api.service';
+import { IAppProfile } from '../../models/app-profile.model';
+import { IPathFilter, IProjectMapping } from '../../models/project-mapping.model';
 import { StatusBadgeComponent } from '../../shared/components/status-badge/status-badge.component';
 import { FormsModule } from '@angular/forms';
 
@@ -49,15 +50,16 @@ import { FormsModule } from '@angular/forms';
               <div class="path-box source">
                 <div class="path-box-label">Source Configuration</div>
                 <div class="form-group">
+                  <label for="mapping-name">Mapping Name *</label>
+                  <input id="mapping-name" type="text" class="cs-input" placeholder="Engineering Docs Migration" [(ngModel)]="newMapping.name" />
+                </div>
+                <div class="form-group">
                   <label for="src-profile">Source Profile *</label>
                   <select id="src-profile" class="cs-select" [(ngModel)]="newMapping.sourceProfileId">
                     <option value="">Select profile...</option>
-                    <option value="prof-001">Google Workspace (Primary)</option>
-                    <option value="prof-002">Microsoft OneDrive (Corporate)</option>
-                    <option value="prof-003">Legacy Google Drive</option>
-                    <option value="prof-004">SharePoint (Intranet)</option>
-                    <option value="prof-005">Dropbox Business</option>
-                    <option value="prof-006">AWS S3 (Archive Bucket)</option>
+                    @for (profile of appProfiles; track profile.id) {
+                      <option [value]="profile.id">{{ profile.name }}</option>
+                    }
                   </select>
                 </div>
                 <div class="form-group">
@@ -77,10 +79,9 @@ import { FormsModule } from '@angular/forms';
                   <label for="dest-profile">Destination Profile *</label>
                   <select id="dest-profile" class="cs-select" [(ngModel)]="newMapping.destinationProfileId">
                     <option value="">Select profile...</option>
-                    <option value="prof-001">Google Workspace (Primary)</option>
-                    <option value="prof-002">Microsoft OneDrive (Corporate)</option>
-                    <option value="prof-003">Legacy Google Drive</option>
-                    <option value="prof-006">AWS S3 (Archive Bucket)</option>
+                    @for (profile of appProfiles; track profile.id) {
+                      <option [value]="profile.id">{{ profile.name }}</option>
+                    }
                   </select>
                 </div>
                 <div class="form-group">
@@ -235,7 +236,7 @@ import { FormsModule } from '@angular/forms';
               <span class="meta-chip">{{ mapping.filters.length }} filters</span>
             </div>
             <div class="mapping-actions">
-              <button class="btn-icon-sm" title="Run now" id="run-mapping-{{mapping.id}}">
+              <button class="btn-icon-sm" title="Run now" id="run-mapping-{{mapping.id}}" (click)="runMapping(mapping)">
                 <span class="material-symbols-outlined icon-sm">play_arrow</span>
               </button>
               <button class="btn-icon-sm" title="Edit">
@@ -635,9 +636,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class ProjectMappingComponent implements OnInit {
   mappings: IProjectMapping[] = [];
+  appProfiles: IAppProfile[] = [];
   showCreateForm = signal(false);
 
-  newMapping: any = {
+  newMapping: CreateMappingFormValue = {
+    name: '',
     sourceProfileId: '',
     sourcePath: '',
     destinationProfileId: '',
@@ -649,9 +652,8 @@ export class ProjectMappingComponent implements OnInit {
     overwriteExisting: false
   };
 
-  jobTypes = [
+  jobTypes: Array<{ value: 'full' | 'delta'; label: string; icon: string; description: string }> = [
     { value: 'full', label: 'Full Migration', icon: 'cloud_upload', description: 'Transfer all files from source to destination.' },
-    { value: 'incremental', label: 'Incremental', icon: 'sync', description: 'Only transfer new or modified files since last run.' },
     { value: 'delta', label: 'Delta Sync', icon: 'difference', description: 'Sync differences; add, update and delete to match source.' },
   ];
 
@@ -664,16 +666,31 @@ export class ProjectMappingComponent implements OnInit {
     { id: 'r6', name: 'Preserve Timestamps', description: 'Keep original file creation and modification timestamps.', enabled: true },
   ];
 
-  booleanOptions = [
+  booleanOptions: Array<{ key: 'preservePermissions' | 'deleteSourceAfterCopy' | 'overwriteExisting'; label: string }> = [
     { key: 'preservePermissions', label: 'Preserve file permissions' },
     { key: 'deleteSourceAfterCopy', label: 'Delete source files after successful copy' },
     { key: 'overwriteExisting', label: 'Overwrite existing files at destination' },
   ];
 
-  constructor(private mockData: MockDataService) {}
+  constructor(private api: CloudShiftApiService) {}
 
   ngOnInit() {
-    this.mappings = this.mockData.getProjectMappings();
+    this.loadMappings();
+    this.loadProfiles();
+  }
+
+  loadMappings() {
+    this.api.getProjectMappings().subscribe({
+      next: mappings => this.mappings = mappings,
+      error: error => console.error('Failed to load project mappings', error)
+    });
+  }
+
+  loadProfiles() {
+    this.api.getAppProfiles().subscribe({
+      next: profiles => this.appProfiles = profiles,
+      error: error => console.error('Failed to load app profiles for mappings', error)
+    });
   }
 
   addFilter() {
@@ -686,7 +703,7 @@ export class ProjectMappingComponent implements OnInit {
   }
 
   removeFilter(id: string) {
-    this.newMapping.filters = this.newMapping.filters.filter((f: any) => f.id !== id);
+    this.newMapping.filters = this.newMapping.filters.filter((f: IPathFilter) => f.id !== id);
   }
 
   saveDraft() {
@@ -695,7 +712,23 @@ export class ProjectMappingComponent implements OnInit {
   }
 
   createMapping() {
-    console.log('Creating mapping', this.newMapping);
-    this.showCreateForm.set(false);
+    if (!this.newMapping.name || !this.newMapping.sourceProfileId || !this.newMapping.destinationProfileId) {
+      return;
+    }
+
+    this.api.createProjectMapping(this.newMapping).subscribe({
+      next: () => {
+        this.showCreateForm.set(false);
+        this.loadMappings();
+      },
+      error: error => console.error('Failed to create project mapping', error)
+    });
+  }
+
+  runMapping(mapping: IProjectMapping) {
+    this.api.startMigration(mapping.id, mapping.jobType === 'delta' ? 'delta' : 'full').subscribe({
+      next: () => this.loadMappings(),
+      error: error => console.error('Failed to start migration job', error)
+    });
   }
 }

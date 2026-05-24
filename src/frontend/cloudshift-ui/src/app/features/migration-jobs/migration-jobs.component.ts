@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MockDataService } from '../../services/mock-data.service';
+import { CloudShiftApiService } from '../../services/cloudshift-api.service';
 import { IMigrationJob, JobStatus } from '../../models/migration-job.model';
 import { StatusBadgeComponent } from '../../shared/components/status-badge/status-badge.component';
 import { ProgressBarComponent } from '../../shared/components/progress-bar/progress-bar.component';
@@ -399,12 +399,15 @@ export class MigrationJobsComponent implements OnInit {
     { value: 'paused',    label: 'Paused',    dotClass: 'paused' },
   ];
 
-  constructor(private mockData: MockDataService) {}
+  constructor(private api: CloudShiftApiService) {}
 
   ngOnInit() { this.loadJobs(); }
 
   loadJobs() {
-    this.jobs = this.mockData.getMigrationJobs();
+    this.api.getMigrationJobs().subscribe({
+      next: jobs => this.jobs = jobs,
+      error: error => console.error('Failed to load migration jobs', error)
+    });
   }
 
   get filteredJobs(): IMigrationJob[] {

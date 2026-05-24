@@ -2,6 +2,7 @@ export type JobStatus = 'running' | 'completed' | 'failed' | 'pending' | 'paused
 
 export interface IMigrationJob {
   id: string;
+  projectMappingId: string;
   name: string;
   sourceProfileId: string;
   sourceProfileName: string;

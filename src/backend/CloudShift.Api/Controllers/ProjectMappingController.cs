@@ -88,6 +88,20 @@ public sealed class ProjectMappingController : ControllerBase
         return Ok(mappings);
     }
 
+    /// <summary>
+    /// Returns all Migration Jobs belonging to the specified user.
+    /// </summary>
+    [HttpGet("jobs")]
+    [ProducesResponseType(typeof(IReadOnlyList<MigrationJobDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetMigrationJobs(
+        [FromQuery] Guid userId,
+        CancellationToken cancellationToken)
+    {
+        var query = new GetMigrationJobsQuery(userId);
+        var jobs = await _mediator.Send(query, cancellationToken);
+        return Ok(jobs);
+    }
+
     // ─────────────────────────────────────────────────────────────────
     // POST /api/mappings/{id}/start
     // ─────────────────────────────────────────────────────────────────

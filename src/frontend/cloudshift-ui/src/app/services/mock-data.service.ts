@@ -90,6 +90,7 @@ export class MockDataService {
     return [
       {
         id: 'job-001',
+        projectMappingId: 'map-001',
         name: 'Backup Data 2023 → Archive',
         sourceProfileId: 'prof-003',
         sourceProfileName: 'Legacy Google Drive',
@@ -108,6 +109,7 @@ export class MockDataService {
       },
       {
         id: 'job-002',
+        projectMappingId: 'map-002',
         name: 'Engineering Docs Sync',
         sourceProfileId: 'prof-001',
         sourceProfileName: 'Google Workspace (Primary)',
@@ -126,6 +128,7 @@ export class MockDataService {
       },
       {
         id: 'job-003',
+        projectMappingId: 'map-003',
         name: 'Marketing Archive Migration',
         sourceProfileId: 'prof-003',
         sourceProfileName: 'Legacy Google Drive',
@@ -144,6 +147,7 @@ export class MockDataService {
       },
       {
         id: 'job-004',
+        projectMappingId: 'map-004',
         name: 'SharePoint → OneDrive Lift',
         sourceProfileId: 'prof-004',
         sourceProfileName: 'SharePoint (Intranet)',
@@ -161,6 +165,7 @@ export class MockDataService {
       },
       {
         id: 'job-005',
+        projectMappingId: 'map-005',
         name: 'Dropbox → Google Workspace',
         sourceProfileId: 'prof-005',
         sourceProfileName: 'Dropbox Business',
@@ -178,6 +183,7 @@ export class MockDataService {
       },
       {
         id: 'job-006',
+        projectMappingId: 'map-006',
         name: 'Delta Sync — Finance Q1',
         sourceProfileId: 'prof-001',
         sourceProfileName: 'Google Workspace (Primary)',

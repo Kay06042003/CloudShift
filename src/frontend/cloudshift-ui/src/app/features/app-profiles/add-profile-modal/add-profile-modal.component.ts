@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalComponent } from '../../../shared/components/modal/modal.component';
 import { CloudProvider } from '../../../models/app-profile.model';
+import { AddProfileFormValue } from '../../../services/cloudshift-api.service';
 
 interface ProviderOption {
   value: CloudProvider;
@@ -220,7 +221,7 @@ interface ProviderOption {
 export class AddProfileModalComponent {
   @Input() isOpen = false;
   @Output() close = new EventEmitter<void>();
-  @Output() profileAdded = new EventEmitter<void>();
+  @Output() profileAdded = new EventEmitter<AddProfileFormValue>();
 
   form: FormGroup;
 
@@ -249,7 +250,7 @@ export class AddProfileModalComponent {
 
   onSubmit() {
     if (this.form.valid) {
-      this.profileAdded.emit();
+      this.profileAdded.emit(this.form.getRawValue() as AddProfileFormValue);
       this.onClose();
     } else {
       this.form.markAllAsTouched();
