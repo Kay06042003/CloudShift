@@ -10,6 +10,7 @@ public class ApplicationDbContext : DbContext
     }
 
     public DbSet<User> Users { get; set; } = null!;
+    public DbSet<OAuthProviderApp> OAuthProviderApps { get; set; } = null!;
     public DbSet<AppProfile> AppProfiles { get; set; } = null!;
     public DbSet<ProjectMapping> ProjectMappings { get; set; } = null!;
     public DbSet<MigrationJob> MigrationJobs { get; set; } = null!;
@@ -43,6 +44,18 @@ public class ApplicationDbContext : DbContext
             .WithMany(u => u.AppProfiles)
             .HasForeignKey(a => a.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<OAuthProviderApp>()
+            .HasOne(a => a.User)
+            .WithMany(u => u.OAuthProviderApps)
+            .HasForeignKey(a => a.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<AppProfile>()
+            .HasOne(a => a.ProviderApp)
+            .WithMany(a => a.AppProfiles)
+            .HasForeignKey(a => a.ProviderAppId)
+            .OnDelete(DeleteBehavior.NoAction);
             
         modelBuilder.Entity<MigrationJob>()
             .HasOne(m => m.ProjectMapping)
@@ -72,6 +85,13 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<ProjectMapping>()
             .HasIndex(m => m.UserId)
             .HasDatabaseName("IX_ProjectMapping_UserId");
+
+        modelBuilder.Entity<OAuthProviderApp>()
+            .HasIndex(a => new { a.UserId, a.Provider })
+            .HasDatabaseName("IX_OAuthProviderApp_UserId_Provider");
+
+        modelBuilder.Entity<AppProfile>()
+            .HasIndex(a => a.ProviderAppId)
+            .HasDatabaseName("IX_AppProfile_ProviderAppId");
     }
 }
-

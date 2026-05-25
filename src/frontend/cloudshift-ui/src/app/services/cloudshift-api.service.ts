@@ -16,28 +16,103 @@ type JobStatusValue = 1 | 2 | 3 | 4 | 5;
 interface ApiAppProfile {
   id: string;
   userId: string;
+  providerAppId: string | null;
   provider: ProviderValue;
   providerName: string;
+  externalAccountId: string;
   email: string;
   expiresAt: string;
   createdAt: string;
 }
 
 export interface AddProfileFormValue {
-  provider: string;
-  name: string;
-  email: string;
-  storageTotalGB: number;
-  authMethod: string;
+  provider: 'google-drive' | 'onedrive';
+  providerAppId: string;
 }
 
-interface AddAppProfileRequest {
+interface ApiOAuthProviderApp {
+  id: string;
   userId: string;
   provider: ProviderValue;
-  email: string;
-  accessToken: string;
-  refreshToken: string;
-  expiresAt: string;
+  providerName: string;
+  name: string;
+  clientId: string;
+  tenantId: string;
+  redirectUri: string;
+  scopes: string;
+  isActive: boolean;
+  linkedProfileCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IOAuthProviderApp {
+  id: string;
+  userId: string;
+  provider: 'google-drive' | 'onedrive';
+  providerName: string;
+  name: string;
+  clientId: string;
+  tenantId: string;
+  redirectUri: string;
+  scopes: string;
+  isActive: boolean;
+  linkedProfileCount: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CreateOAuthProviderAppFormValue {
+  provider: 'google-drive' | 'onedrive';
+  name: string;
+  clientId: string;
+  clientSecret: string;
+  tenantId: string;
+  redirectUri: string;
+  scopes: string;
+}
+
+interface CreateOAuthProviderAppRequest {
+  userId: string;
+  provider: ProviderValue;
+  name: string;
+  clientId: string;
+  clientSecret: string;
+  tenantId: string;
+  redirectUri: string;
+  scopes: string;
+}
+
+export interface UpdateOAuthProviderAppFormValue {
+  provider: 'google-drive' | 'onedrive';
+  name: string;
+  clientId: string;
+  clientSecret: string;
+  tenantId: string;
+  redirectUri: string;
+  scopes: string;
+  isActive: boolean;
+}
+
+interface UpdateOAuthProviderAppRequest {
+  userId: string;
+  provider: ProviderValue;
+  name: string;
+  clientId: string;
+  clientSecret: string | null;
+  tenantId: string;
+  redirectUri: string;
+  scopes: string;
+  isActive: boolean;
+}
+
+export interface DeleteOAuthProviderAppResult {
+  id: string;
+  userId: string;
+  deleted: boolean;
+  deactivated: boolean;
+  linkedProfileCount: number;
+  message: string;
 }
 
 interface ApiFilterConfig {
@@ -116,19 +191,62 @@ export class CloudShiftApiService {
       .pipe(map(profiles => profiles.map(profile => this.mapProfile(profile))));
   }
 
-  addAppProfile(form: AddProfileFormValue): Observable<IAppProfile> {
-    const request: AddAppProfileRequest = {
+  getOAuthProviderApps(): Observable<IOAuthProviderApp[]> {
+    return this.http
+      .get<ApiOAuthProviderApp[]>(`${API_BASE_URL}/oauth-provider-apps`, { params: { userId: this.userId } })
+      .pipe(map(apps => apps.map(app => this.mapOAuthProviderApp(app))));
+  }
+
+  createOAuthProviderApp(form: CreateOAuthProviderAppFormValue): Observable<IOAuthProviderApp> {
+    const request: CreateOAuthProviderAppRequest = {
       userId: this.userId,
       provider: this.toProviderValue(form.provider),
-      email: form.email,
-      accessToken: `dev-access-token-${crypto.randomUUID()}`,
-      refreshToken: `dev-refresh-token-${crypto.randomUUID()}`,
-      expiresAt: new Date(Date.now() + 60 * 60 * 1000).toISOString()
+      name: form.name,
+      clientId: form.clientId,
+      clientSecret: form.clientSecret,
+      tenantId: form.provider === 'onedrive' ? form.tenantId || 'common' : '',
+      redirectUri: form.redirectUri,
+      scopes: form.scopes
     };
 
     return this.http
-      .post<ApiAppProfile>(`${API_BASE_URL}/app-profiles`, request)
-      .pipe(map(profile => this.mapProfile(profile)));
+      .post<ApiOAuthProviderApp>(`${API_BASE_URL}/oauth-provider-apps`, request)
+      .pipe(map(app => this.mapOAuthProviderApp(app)));
+  }
+
+  updateOAuthProviderApp(id: string, form: UpdateOAuthProviderAppFormValue): Observable<IOAuthProviderApp> {
+    const request: UpdateOAuthProviderAppRequest = {
+      userId: this.userId,
+      provider: this.toProviderValue(form.provider),
+      name: form.name,
+      clientId: form.clientId,
+      clientSecret: form.clientSecret.trim() ? form.clientSecret : null,
+      tenantId: form.provider === 'onedrive' ? form.tenantId || 'common' : '',
+      redirectUri: form.redirectUri,
+      scopes: form.scopes,
+      isActive: form.isActive
+    };
+
+    return this.http
+      .put<ApiOAuthProviderApp>(`${API_BASE_URL}/oauth-provider-apps/${id}`, request)
+      .pipe(map(app => this.mapOAuthProviderApp(app)));
+  }
+
+  deleteOAuthProviderApp(id: string): Observable<DeleteOAuthProviderAppResult> {
+    return this.http.delete<DeleteOAuthProviderAppResult>(
+      `${API_BASE_URL}/oauth-provider-apps/${id}`,
+      { params: { userId: this.userId } }
+    );
+  }
+
+  startAppProfileOAuth(form: AddProfileFormValue): void {
+    const params = new URLSearchParams({ userId: this.userId });
+    window.location.href = `${API_BASE_URL}/app-profiles/oauth/provider-apps/${form.providerAppId}/authorize?${params.toString()}`;
+  }
+
+  getSuggestedOAuthRedirectUri(provider: 'google-drive' | 'onedrive'): string {
+    const providerPath = provider === 'onedrive' ? 'onedrive' : 'google';
+    return `${API_BASE_URL}/app-profiles/oauth/${providerPath}/callback`;
   }
 
   getProjectMappings(): Observable<IProjectMapping[]> {
@@ -221,6 +339,24 @@ export class CloudShiftApiService {
     };
   }
 
+  private mapOAuthProviderApp(app: ApiOAuthProviderApp): IOAuthProviderApp {
+    return {
+      id: app.id,
+      userId: app.userId,
+      provider: this.toOAuthProviderSlug(app.providerName, app.provider),
+      providerName: app.providerName,
+      name: app.name,
+      clientId: app.clientId,
+      tenantId: app.tenantId,
+      redirectUri: app.redirectUri,
+      scopes: app.scopes,
+      isActive: app.isActive,
+      linkedProfileCount: app.linkedProfileCount,
+      createdAt: new Date(app.createdAt),
+      updatedAt: new Date(app.updatedAt)
+    };
+  }
+
   private mapProjectMapping(mapping: ApiProjectMapping): IProjectMapping {
     return {
       id: mapping.id,
@@ -269,11 +405,16 @@ export class CloudShiftApiService {
     };
   }
 
-  private toProviderValue(provider: string): ProviderValue {
+  private toProviderValue(provider: 'google-drive' | 'onedrive'): ProviderValue {
     return provider === 'onedrive' ? 2 : 1;
   }
 
   private toProviderSlug(providerName: string, provider: ProviderValue): IAppProfile['provider'] {
+    if (providerName === 'OneDrive' || provider === 2) return 'onedrive';
+    return 'google-drive';
+  }
+
+  private toOAuthProviderSlug(providerName: string, provider: ProviderValue): IOAuthProviderApp['provider'] {
     if (providerName === 'OneDrive' || provider === 2) return 'onedrive';
     return 'google-drive';
   }

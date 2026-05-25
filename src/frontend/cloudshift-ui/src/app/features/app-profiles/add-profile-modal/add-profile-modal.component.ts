@@ -1,15 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalComponent } from '../../../shared/components/modal/modal.component';
-import { CloudProvider } from '../../../models/app-profile.model';
-import { AddProfileFormValue } from '../../../services/cloudshift-api.service';
-
-interface ProviderOption {
-  value: CloudProvider;
-  label: string;
-  icon: string;
-}
+import { AddProfileFormValue, IOAuthProviderApp } from '../../../services/cloudshift-api.service';
 
 @Component({
   selector: 'app-add-profile-modal',
@@ -23,85 +16,54 @@ interface ProviderOption {
       (close)="onClose()"
     >
       <form [formGroup]="form" (ngSubmit)="onSubmit()" id="add-profile-form">
-        <!-- Provider Selection -->
         <div class="section-label">1. Select Provider</div>
         <div class="provider-grid">
-          @for (p of providers; track p.value) {
-            <button
-              type="button"
-              class="provider-option"
-              [class.selected]="form.get('provider')?.value === p.value"
-              (click)="selectProvider(p.value)"
-            >
-              <span class="material-symbols-outlined">{{ p.icon }}</span>
-              <span>{{ p.label }}</span>
-            </button>
-          }
+          <button
+            type="button"
+            class="provider-option"
+            [class.selected]="form.get('provider')?.value === 'google-drive'"
+            (click)="selectProvider('google-drive')"
+          >
+            <span class="material-symbols-outlined">add_to_drive</span>
+            <span>Google Drive</span>
+          </button>
+          <button
+            type="button"
+            class="provider-option"
+            [class.selected]="form.get('provider')?.value === 'onedrive'"
+            (click)="selectProvider('onedrive')"
+          >
+            <span class="material-symbols-outlined">cloud</span>
+            <span>OneDrive</span>
+          </button>
         </div>
 
         <div class="form-divider"></div>
 
-        <!-- Profile Details -->
-        <div class="section-label">2. Profile Details</div>
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="profile-name">Profile Name *</label>
-            <input
-              id="profile-name"
-              type="text"
-              class="cs-input"
-              formControlName="name"
-              placeholder="e.g. Engineering Google Workspace"
-              [class.error]="form.get('name')?.invalid && form.get('name')?.touched"
-            />
-            <span class="error-text" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
-              Profile name is required
-            </span>
-          </div>
-
-          <div class="form-group">
-            <label for="profile-email">Account Email / Identifier *</label>
-            <input
-              id="profile-email"
-              type="email"
-              class="cs-input"
-              formControlName="email"
-              placeholder="e.g. admin@company.com"
-              [class.error]="form.get('email')?.invalid && form.get('email')?.touched"
-            />
-            <span class="error-text" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
-              Valid email or identifier is required
-            </span>
-          </div>
-
-          <div class="form-group">
-            <label for="storage-quota">Storage Quota (GB)</label>
-            <input
-              id="storage-quota"
-              type="number"
-              class="cs-input"
-              formControlName="storageTotalGB"
-              placeholder="e.g. 1000"
-              min="1"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="auth-method">Authentication Method</label>
-            <select id="auth-method" class="cs-select" formControlName="authMethod">
-              <option value="oauth2">OAuth 2.0 (Recommended)</option>
-              <option value="service-account">Service Account Key (JSON)</option>
-              <option value="api-key">API Key</option>
-            </select>
-          </div>
+        <div class="section-label">2. Select OAuth App</div>
+        <div class="provider-grid">
+          @for (p of filteredProviderApps; track p.id) {
+            <button
+              type="button"
+              class="provider-option"
+              [class.selected]="form.get('providerAppId')?.value === p.id"
+              (click)="selectProviderApp(p.id)"
+            >
+              <span class="material-symbols-outlined">{{ p.provider === 'onedrive' ? 'cloud' : 'add_to_drive' }}</span>
+              <span>{{ p.name }}</span>
+              <small>{{ p.clientId }}</small>
+            </button>
+          } @empty {
+            <div class="empty-provider-apps">
+              No OAuth app is configured for this provider. Add one in OAuth Provider Apps first.
+            </div>
+          }
         </div>
 
-        @if (form.get('authMethod')?.value === 'oauth2') {
-          <div class="oauth-notice">
-            <span class="material-symbols-outlined icon-sm" style="color:var(--color-primary)">info</span>
-            You will be redirected to authorize access via OAuth 2.0 after saving.
-          </div>
-        }
+        <div class="oauth-notice">
+          <span class="material-symbols-outlined icon-sm" style="color:var(--color-primary)">info</span>
+          Google/Microsoft will ask you to choose the account to connect. CloudShift stores encrypted account tokens after authorization.
+        </div>
       </form>
 
       <div modal-footer>
@@ -113,7 +75,7 @@ interface ProviderOption {
           form="add-profile-form"
           class="btn-primary"
           id="save-profile-btn"
-          [disabled]="form.invalid"
+          [disabled]="isConnectDisabled"
         >
           <span class="material-symbols-outlined icon-sm">add_link</span>
           Connect Profile
@@ -133,7 +95,7 @@ interface ProviderOption {
 
     .provider-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 8px;
       margin-bottom: 4px;
     }
@@ -153,6 +115,11 @@ interface ProviderOption {
       transition: all 0.15s ease;
       cursor: pointer;
 
+      small {
+        color: var(--color-outline);
+        font-size: 11px;
+      }
+
       &:hover {
         border-color: var(--color-primary-fixed-dim);
         background: var(--color-primary-fixed);
@@ -167,13 +134,17 @@ interface ProviderOption {
       }
     }
 
-    .form-divider { height: 1px; background: var(--color-outline-variant); margin: 16px 0; }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
+    .empty-provider-apps {
+      grid-column: 1 / -1;
+      padding: 18px;
+      border: 1px dashed var(--color-outline-variant);
+      border-radius: var(--radius-md);
+      color: var(--color-outline);
+      font-size: 13px;
+      text-align: center;
     }
+
+    .form-divider { height: 1px; background: var(--color-outline-variant); margin: 16px 0; }
 
     .oauth-notice {
       display: flex;
@@ -218,34 +189,46 @@ interface ProviderOption {
     }
   `]
 })
-export class AddProfileModalComponent {
+export class AddProfileModalComponent implements OnChanges {
   @Input() isOpen = false;
+  @Input() providerApps: IOAuthProviderApp[] = [];
   @Output() close = new EventEmitter<void>();
   @Output() profileAdded = new EventEmitter<AddProfileFormValue>();
 
   form: FormGroup;
 
-  providers: ProviderOption[] = [
-    { value: 'google-workspace', label: 'Google Workspace', icon: 'work' },
-    { value: 'google-drive',     label: 'Google Drive',     icon: 'add_to_drive' },
-    { value: 'onedrive',         label: 'OneDrive',         icon: 'cloud' },
-    { value: 'sharepoint',       label: 'SharePoint',       icon: 'share' },
-    { value: 'dropbox',          label: 'Dropbox',          icon: 'cloud_download' },
-    { value: 's3',               label: 'AWS S3',           icon: 'storage' },
-  ];
-
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      provider:      ['google-workspace', Validators.required],
-      name:          ['', Validators.required],
-      email:         ['', [Validators.required, Validators.email]],
-      storageTotalGB:[1000],
-      authMethod:    ['oauth2']
+      provider: ['google-drive', Validators.required],
+      providerAppId: ['', Validators.required]
     });
   }
 
-  selectProvider(value: CloudProvider) {
-    this.form.patchValue({ provider: value });
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['isOpen'] && this.isOpen) {
+      this.syncSelectedProviderApp();
+    }
+  }
+
+  get filteredProviderApps(): IOAuthProviderApp[] {
+    return this.providerApps.filter(app => app.provider === this.form.get('provider')?.value && app.isActive);
+  }
+
+  get isConnectDisabled(): boolean {
+    if (this.form.invalid) {
+      return true;
+    }
+
+    return !this.form.get('providerAppId')?.value;
+  }
+
+  selectProvider(provider: IOAuthProviderApp['provider']) {
+    this.form.patchValue({ provider });
+    this.syncSelectedProviderApp();
+  }
+
+  selectProviderApp(providerAppId: string) {
+    this.form.patchValue({ providerAppId });
   }
 
   onSubmit() {
@@ -258,7 +241,22 @@ export class AddProfileModalComponent {
   }
 
   onClose() {
-    this.form.reset({ provider: 'google-workspace', authMethod: 'oauth2', storageTotalGB: 1000 });
+    this.form.reset({ provider: 'google-drive', providerAppId: '' });
     this.close.emit();
+  }
+
+  providerLabel(provider: IOAuthProviderApp['provider']): string {
+    return provider === 'onedrive' ? 'OneDrive' : 'Google Drive';
+  }
+
+  private syncSelectedProviderApp() {
+    const selectedProvider = this.form.get('provider')?.value;
+    const currentProviderAppId = this.form.get('providerAppId')?.value;
+    const currentStillValid = this.providerApps.some(app =>
+      app.id === currentProviderAppId && app.provider === selectedProvider && app.isActive);
+
+    if (!currentStillValid) {
+      this.form.patchValue({ providerAppId: this.filteredProviderApps[0]?.id ?? '' });
+    }
   }
 }

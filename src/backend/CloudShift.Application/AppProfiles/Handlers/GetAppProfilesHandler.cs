@@ -29,8 +29,10 @@ public sealed class GetAppProfilesHandler : IRequestHandler<GetAppProfilesQuery,
     private static AppProfileDto MapToDto(AppProfile p) => new(
         p.Id,
         p.UserId,
+        p.ProviderAppId,
         p.Provider,
         p.Provider.ToString(),
+        p.ExternalAccountId,
         p.Email,
         p.ExpiresAt,
         p.CreatedAt

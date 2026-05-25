@@ -12,5 +12,6 @@ public class User
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public ICollection<AppProfile> AppProfiles { get; set; } = new List<AppProfile>();
+    public ICollection<OAuthProviderApp> OAuthProviderApps { get; set; } = new List<OAuthProviderApp>();
     public ICollection<ProjectMapping> ProjectMappings { get; set; } = new List<ProjectMapping>();
 }

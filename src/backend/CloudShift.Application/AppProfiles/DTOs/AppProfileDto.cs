@@ -9,8 +9,10 @@ namespace CloudShift.Application.AppProfiles.DTOs;
 public sealed record AppProfileDto(
     Guid Id,
     Guid UserId,
+    Guid? ProviderAppId,
     ProviderType Provider,
     string ProviderName,
+    string ExternalAccountId,
     string Email,
     DateTime ExpiresAt,
     DateTime CreatedAt

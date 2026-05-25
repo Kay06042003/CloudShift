@@ -28,10 +28,6 @@ namespace CloudShift.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AccessToken")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -39,20 +35,38 @@ namespace CloudShift.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("EncryptedAccessToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EncryptedRefreshToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("ExpiresAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ExternalAccountId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GrantedScopes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Provider")
                         .HasColumnType("int");
 
-                    b.Property<string>("RefreshToken")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("ProviderAppId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProviderAppId")
+                        .HasDatabaseName("IX_AppProfile_ProviderAppId");
 
                     b.HasIndex("UserId");
 
@@ -189,6 +203,59 @@ namespace CloudShift.Infrastructure.Migrations
                     b.ToTable("ProjectMappings");
                 });
 
+            modelBuilder.Entity("CloudShift.Domain.Entities.OAuthProviderApp", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EncryptedClientSecret")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Provider")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RedirectUri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Scopes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId", "Provider")
+                        .HasDatabaseName("IX_OAuthProviderApp_UserId_Provider");
+
+                    b.ToTable("OAuthProviderApps");
+                });
+
             modelBuilder.Entity("CloudShift.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -217,11 +284,18 @@ namespace CloudShift.Infrastructure.Migrations
 
             modelBuilder.Entity("CloudShift.Domain.Entities.AppProfile", b =>
                 {
+                    b.HasOne("CloudShift.Domain.Entities.OAuthProviderApp", "ProviderApp")
+                        .WithMany("AppProfiles")
+                        .HasForeignKey("ProviderAppId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("CloudShift.Domain.Entities.User", "User")
                         .WithMany("AppProfiles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ProviderApp");
 
                     b.Navigation("User");
                 });
@@ -275,9 +349,25 @@ namespace CloudShift.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("CloudShift.Domain.Entities.OAuthProviderApp", b =>
+                {
+                    b.HasOne("CloudShift.Domain.Entities.User", "User")
+                        .WithMany("OAuthProviderApps")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("CloudShift.Domain.Entities.MigrationJob", b =>
                 {
                     b.Navigation("FileTransferLogs");
+                });
+
+            modelBuilder.Entity("CloudShift.Domain.Entities.OAuthProviderApp", b =>
+                {
+                    b.Navigation("AppProfiles");
                 });
 
             modelBuilder.Entity("CloudShift.Domain.Entities.ProjectMapping", b =>
@@ -288,6 +378,8 @@ namespace CloudShift.Infrastructure.Migrations
             modelBuilder.Entity("CloudShift.Domain.Entities.User", b =>
                 {
                     b.Navigation("AppProfiles");
+
+                    b.Navigation("OAuthProviderApps");
 
                     b.Navigation("ProjectMappings");
                 });

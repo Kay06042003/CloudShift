@@ -7,32 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CloudShift.Api.Controllers;
 
-/// <summary>
-/// Manages Project Mappings (migration configurations) and triggers Migration Jobs.
-/// </summary>
 [ApiController]
 [Route("api/mappings")]
 [Produces("application/json")]
 public sealed class ProjectMappingController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly ILogger<ProjectMappingController> _logger;
 
-    public ProjectMappingController(IMediator mediator)
+    public ProjectMappingController(
+        IMediator mediator,
+        ILogger<ProjectMappingController> logger)
     {
         _mediator = mediator;
+        _logger = logger;
     }
 
-    // ─────────────────────────────────────────────────────────────────
-    // POST /api/mappings
-    // ─────────────────────────────────────────────────────────────────
-
-    /// <summary>
-    /// Creates a new Project Mapping (migration configuration).
-    /// </summary>
-    /// <remarks>
-    /// Validates that both SourceProfileId and DestProfileId exist in the database before persisting.
-    /// The FilterConfig object is stored as a JSON string internally but returned as a typed object.
-    /// </remarks>
     [HttpPost]
     [ProducesResponseType(typeof(ProjectMappingDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -42,7 +32,10 @@ public sealed class ProjectMappingController : ControllerBase
         CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
+        {
+            _logger.LogWarning("Rejected project mapping create request because model state is invalid.");
             return BadRequest(ModelState);
+        }
 
         var command = new CreateProjectMappingCommand(
             request.UserId,
@@ -52,12 +45,22 @@ public sealed class ProjectMappingController : ControllerBase
             request.SourcePath,
             request.DestPath,
             request.FilterConfig ?? new FilterConfig(),
-            request.ConflictResolutionRule
-        );
+            request.ConflictResolutionRule);
 
         try
         {
+            _logger.LogInformation(
+                "Creating project mapping. UserId: {UserId}, SourceProfileId: {SourceProfileId}, DestProfileId: {DestProfileId}",
+                request.UserId,
+                request.SourceProfileId,
+                request.DestProfileId);
+
             var result = await _mediator.Send(command, cancellationToken);
+
+            _logger.LogInformation(
+                "Created project mapping. MappingId: {MappingId}, UserId: {UserId}",
+                result.Id,
+                result.UserId);
 
             return CreatedAtAction(
                 nameof(GetMappings),
@@ -66,17 +69,11 @@ public sealed class ProjectMappingController : ControllerBase
         }
         catch (KeyNotFoundException ex)
         {
+            _logger.LogWarning(ex, "Cannot create project mapping because a referenced app profile was not found.");
             return NotFound(new { error = ex.Message });
         }
     }
 
-    // ─────────────────────────────────────────────────────────────────
-    // GET /api/mappings?userId={userId}
-    // ─────────────────────────────────────────────────────────────────
-
-    /// <summary>
-    /// Returns all Project Mappings belonging to the specified user.
-    /// </summary>
     [HttpGet]
     [ProducesResponseType(typeof(IReadOnlyList<ProjectMappingDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetMappings(
@@ -85,12 +82,15 @@ public sealed class ProjectMappingController : ControllerBase
     {
         var query = new GetProjectMappingsQuery(userId);
         var mappings = await _mediator.Send(query, cancellationToken);
+
+        _logger.LogInformation(
+            "Returned project mappings. UserId: {UserId}, Count: {Count}",
+            userId,
+            mappings.Count);
+
         return Ok(mappings);
     }
 
-    /// <summary>
-    /// Returns all Migration Jobs belonging to the specified user.
-    /// </summary>
     [HttpGet("jobs")]
     [ProducesResponseType(typeof(IReadOnlyList<MigrationJobDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetMigrationJobs(
@@ -99,24 +99,15 @@ public sealed class ProjectMappingController : ControllerBase
     {
         var query = new GetMigrationJobsQuery(userId);
         var jobs = await _mediator.Send(query, cancellationToken);
+
+        _logger.LogInformation(
+            "Returned migration jobs. UserId: {UserId}, Count: {Count}",
+            userId,
+            jobs.Count);
+
         return Ok(jobs);
     }
 
-    // ─────────────────────────────────────────────────────────────────
-    // POST /api/mappings/{id}/start
-    // ─────────────────────────────────────────────────────────────────
-
-    /// <summary>
-    /// Starts a migration job for the given mapping.
-    /// </summary>
-    /// <remarks>
-    /// This endpoint:
-    /// 1. Creates a new MigrationJob row in the database with status <c>Queued</c>.
-    /// 2. Publishes a <c>MigrationJobStartedEvent</c> to RabbitMQ so the Worker Service begins the transfer.
-    /// </remarks>
-    /// <param name="id">The ProjectMapping ID to run the migration for.</param>
-    /// <param name="request">Optional job parameters (e.g. JobType). Omit for a full migration.</param>
-    /// <param name="cancellationToken"></param>
     [HttpPost("{id:guid}/start")]
     [ProducesResponseType(typeof(MigrationJobDto), StatusCodes.Status202Accepted)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -127,28 +118,32 @@ public sealed class ProjectMappingController : ControllerBase
     {
         var command = new StartMigrationJobCommand(
             MappingId: id,
-            JobType: request?.JobType ?? Domain.Enums.JobType.Full
-        );
+            JobType: request?.JobType ?? Domain.Enums.JobType.Full);
 
         try
         {
+            _logger.LogInformation(
+                "Starting migration job. MappingId: {MappingId}, JobType: {JobType}",
+                id,
+                command.JobType);
+
             var result = await _mediator.Send(command, cancellationToken);
 
-            // 202 Accepted — the job has been queued and is being processed asynchronously
+            _logger.LogInformation(
+                "Queued migration job. JobId: {JobId}, MappingId: {MappingId}, JobType: {JobType}",
+                result.Id,
+                result.ProjectMappingId,
+                result.JobType);
+
             return Accepted(result);
         }
         catch (KeyNotFoundException ex)
         {
+            _logger.LogWarning(ex, "Cannot start migration job because mapping {MappingId} was not found.", id);
             return NotFound(new { error = ex.Message });
         }
     }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Local request record
-// ─────────────────────────────────────────────────────────────────────────────
-
-/// <summary>Optional body for the start-migration endpoint.</summary>
 public sealed record StartMigrationJobRequest(
-    CloudShift.Domain.Enums.JobType JobType = CloudShift.Domain.Enums.JobType.Full
-);
+    CloudShift.Domain.Enums.JobType JobType = CloudShift.Domain.Enums.JobType.Full);
