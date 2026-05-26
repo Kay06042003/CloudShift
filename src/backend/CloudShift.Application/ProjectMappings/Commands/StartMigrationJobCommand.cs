@@ -10,6 +10,7 @@ namespace CloudShift.Application.ProjectMappings.Commands;
 /// Returns the newly created <see cref="MigrationJobDto"/>.
 /// </summary>
 public sealed record StartMigrationJobCommand(
+    Guid UserId,
     Guid MappingId,
     JobType JobType = JobType.Full
 ) : IRequest<MigrationJobDto>;

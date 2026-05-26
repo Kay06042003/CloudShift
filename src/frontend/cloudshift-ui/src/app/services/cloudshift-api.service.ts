@@ -123,6 +123,7 @@ interface ApiFilterConfig {
   modifiedAfter: string | null;
   modifiedBefore: string | null;
   includeNamePatterns: string[];
+  skipHiddenFiles: boolean;
 }
 
 interface ApiProjectMapping {
@@ -149,8 +150,7 @@ export interface CreateMappingFormValue {
   destinationPath: string;
   filters: IPathFilter[];
   jobType: 'full' | 'delta';
-  preservePermissions: boolean;
-  deleteSourceAfterCopy: boolean;
+  skipHiddenFiles: boolean;
   overwriteExisting: boolean;
 }
 
@@ -263,7 +263,7 @@ export class CloudShiftApiService {
       destProfileId: form.destinationProfileId,
       sourcePath: form.sourcePath,
       destPath: form.destinationPath,
-      filterConfig: this.toFilterConfig(form.filters),
+      filterConfig: this.toFilterConfig(form),
       conflictResolutionRule: form.overwriteExisting ? 'Overwrite' : 'Skip'
     };
 
@@ -275,6 +275,7 @@ export class CloudShiftApiService {
   startMigration(mappingId: string, jobType: 'full' | 'delta' = 'full'): Observable<IMigrationJob> {
     return this.http
       .post<ApiMigrationJob>(`${API_BASE_URL}/mappings/${mappingId}/start`, {
+        userId: this.userId,
         jobType: jobType === 'delta' ? 2 : 1
       })
       .pipe(map(job => this.mapMigrationJob(job)));
@@ -433,21 +434,22 @@ export class CloudShiftApiService {
     return 'pending';
   }
 
-  private toFilterConfig(filters: IPathFilter[]): ApiFilterConfig {
+  private toFilterConfig(form: CreateMappingFormValue): ApiFilterConfig {
     return {
-      includeExtensions: filters
+      includeExtensions: form.filters
         .filter(filter => filter.operator === 'include' && filter.type === 'file-extension')
         .map(filter => filter.pattern),
-      excludeExtensions: filters
+      excludeExtensions: form.filters
         .filter(filter => filter.operator === 'exclude' && filter.type === 'file-extension')
         .map(filter => filter.pattern),
       maxSizeMB: null,
       minSizeMB: null,
       modifiedAfter: null,
       modifiedBefore: null,
-      includeNamePatterns: filters
+      includeNamePatterns: form.filters
         .filter(filter => filter.operator === 'include' && filter.type !== 'file-extension')
-        .map(filter => filter.pattern)
+        .map(filter => filter.pattern),
+      skipHiddenFiles: form.skipHiddenFiles
     };
   }
 

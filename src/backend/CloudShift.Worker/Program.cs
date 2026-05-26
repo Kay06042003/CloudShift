@@ -1,9 +1,10 @@
 using CloudShift.Application.Common.Interfaces;
+using CloudShift.Infrastructure.Auth;
 using CloudShift.Infrastructure.Data;
 using CloudShift.Infrastructure.Logging;
 using CloudShift.Worker;
 using CloudShift.Worker.Consumers;
-using CloudShift.Worker.Storage;
+using CloudShift.Worker.MigrationPlugins;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -29,7 +30,10 @@ builder.Services.AddSerilog();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<ICloudStorageProvider, NoopCloudStorageProvider>();
+builder.Services.AddDataProtection();
+builder.Services.AddScoped<ITokenProtector, DataProtectionTokenProtector>();
+builder.Services.AddScoped<ProviderMigrationPluginResolver>();
+builder.Services.AddHttpClient<IProviderMigrationPlugin, GoogleDriveOneDriveMigrationPlugin>();
 
 builder.Services.AddMassTransit(x =>
 {

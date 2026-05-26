@@ -1,4 +1,6 @@
 using CloudShift.Application.Common.Behaviors;
+using CloudShift.Application.ProjectMappings.Interfaces;
+using CloudShift.Application.ProjectMappings.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +19,8 @@ public static class DependencyInjection
             cfg.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
             cfg.AddOpenBehavior(typeof(RequestLoggingBehavior<,>));
         });
+
+        services.AddSingleton<IProviderRoutePolicy, DefaultProviderRoutePolicy>();
 
         return services;
     }

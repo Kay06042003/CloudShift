@@ -72,6 +72,16 @@ public sealed class ProjectMappingController : ControllerBase
             _logger.LogWarning(ex, "Cannot create project mapping because a referenced app profile was not found.");
             return NotFound(new { error = ex.Message });
         }
+        catch (UnauthorizedAccessException ex)
+        {
+            _logger.LogWarning(ex, "Cannot create project mapping because profile ownership validation failed.");
+            return Forbid();
+        }
+        catch (InvalidOperationException ex)
+        {
+            _logger.LogWarning(ex, "Cannot create project mapping because validation failed.");
+            return BadRequest(new { error = ex.Message });
+        }
     }
 
     [HttpGet]
@@ -117,8 +127,15 @@ public sealed class ProjectMappingController : ControllerBase
         CancellationToken cancellationToken)
     {
         var command = new StartMigrationJobCommand(
+            UserId: request?.UserId ?? Guid.Empty,
             MappingId: id,
             JobType: request?.JobType ?? Domain.Enums.JobType.Full);
+
+        if (command.UserId == Guid.Empty)
+        {
+            _logger.LogWarning("Rejected migration job start because UserId was not provided. MappingId: {MappingId}", id);
+            return BadRequest(new { error = "UserId is required." });
+        }
 
         try
         {
@@ -142,8 +159,19 @@ public sealed class ProjectMappingController : ControllerBase
             _logger.LogWarning(ex, "Cannot start migration job because mapping {MappingId} was not found.", id);
             return NotFound(new { error = ex.Message });
         }
+        catch (UnauthorizedAccessException ex)
+        {
+            _logger.LogWarning(ex, "Cannot start migration job because mapping ownership validation failed. MappingId: {MappingId}", id);
+            return Forbid();
+        }
+        catch (InvalidOperationException ex)
+        {
+            _logger.LogWarning(ex, "Cannot start migration job because validation failed. MappingId: {MappingId}", id);
+            return BadRequest(new { error = ex.Message });
+        }
     }
 }
 
 public sealed record StartMigrationJobRequest(
+    Guid UserId,
     CloudShift.Domain.Enums.JobType JobType = CloudShift.Domain.Enums.JobType.Full);

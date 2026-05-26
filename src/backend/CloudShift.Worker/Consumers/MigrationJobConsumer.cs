@@ -1,13 +1,12 @@
-using System;
+using System.Diagnostics;
 using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using CloudShift.Application.Common.Interfaces;
+using System.Text.Json;
+using CloudShift.Application.ProjectMappings.Models;
 using CloudShift.Domain.Entities;
 using CloudShift.Domain.Enums;
 using CloudShift.Domain.Messages;
 using CloudShift.Infrastructure.Data;
+using CloudShift.Worker.MigrationPlugins;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -15,19 +14,21 @@ using Polly;
 
 namespace CloudShift.Worker.Consumers;
 
-public class MigrationJobConsumer : IConsumer<MigrationJobStartedEvent>
+public sealed class MigrationJobConsumer : IConsumer<MigrationJobStartedEvent>
 {
+    private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
+
     private readonly ApplicationDbContext _dbContext;
-    private readonly ICloudStorageProvider _cloudStorageProvider;
+    private readonly ProviderMigrationPluginResolver _pluginResolver;
     private readonly ILogger<MigrationJobConsumer> _logger;
 
     public MigrationJobConsumer(
         ApplicationDbContext dbContext,
-        ICloudStorageProvider cloudStorageProvider,
+        ProviderMigrationPluginResolver pluginResolver,
         ILogger<MigrationJobConsumer> logger)
     {
         _dbContext = dbContext;
-        _cloudStorageProvider = cloudStorageProvider;
+        _pluginResolver = pluginResolver;
         _logger = logger;
     }
 
@@ -35,74 +36,95 @@ public class MigrationJobConsumer : IConsumer<MigrationJobStartedEvent>
     {
         var cancellationToken = context.CancellationToken;
         var jobId = context.Message.JobId;
-        _logger.LogInformation("Received MigrationJobStartedEvent for JobId: {JobId}", jobId);
+        var stopwatch = Stopwatch.StartNew();
 
-        var job = await _dbContext.MigrationJobs
-            .Include(j => j.ProjectMapping)
-                .ThenInclude(m => m!.SourceProfile)
-            .Include(j => j.ProjectMapping)
-                .ThenInclude(m => m!.DestProfile)
-            .FirstOrDefaultAsync(j => j.Id == jobId, cancellationToken);
+        using var scope = _logger.BeginScope(new Dictionary<string, object?>
+        {
+            ["JobId"] = jobId,
+            ["BatchId"] = context.MessageId
+        });
 
+        _logger.LogInformation("Received migration job event. MappingId: {MappingId}", context.Message.MappingId);
+
+        var job = await LoadJobAsync(jobId, cancellationToken);
         if (job is null)
         {
-            _logger.LogWarning("MigrationJob with JobId: {JobId} not found.", jobId);
+            _logger.LogWarning("Skipped migration job because it was not found.");
             return;
         }
 
-        if (job.ProjectMapping is null)
+        if (!TryBuildRouteContext(job, out var routeContext, out var validationError))
         {
-            _logger.LogError("MigrationJob {JobId} has no ProjectMapping loaded.", jobId);
+            await MarkJobFailedAsync(job, validationError, cancellationToken);
+            return;
+        }
+
+        var plugin = _pluginResolver.Resolve(
+            routeContext.SourceProfile.Provider,
+            routeContext.DestinationProfile.Provider);
+        var retryPolicy = CreateHttpRetryPolicy(job.Id);
+
+        try
+        {
+            await ProcessJobAsync(job, routeContext, plugin, retryPolicy, cancellationToken);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
             job.Status = JobStatus.Failed;
             job.CompletedAt = DateTime.UtcNow;
             await _dbContext.SaveChangesAsync(cancellationToken);
-            return;
-        }
 
-        var retryPolicy = CreateHttpRetryPolicy(jobId);
-        var plannedFiles = await GetFullJobFilePlanAsync(job.ProjectMapping, cancellationToken);
+            _logger.LogError(
+                ex,
+                "Migration job failed. MappingId: {MappingId}, ElapsedMs: {ElapsedMs}",
+                job.ProjectMappingId,
+                stopwatch.ElapsedMilliseconds);
+        }
+    }
+
+    private async Task ProcessJobAsync(
+        MigrationJob job,
+        MigrationRouteContext routeContext,
+        IProviderMigrationPlugin plugin,
+        IAsyncPolicy retryPolicy,
+        CancellationToken cancellationToken)
+    {
+        var plannedFiles = await retryPolicy.ExecuteAsync(
+            ct => plugin.BuildFilePlanAsync(routeContext, ct),
+            cancellationToken);
 
         job.Status = JobStatus.Processing;
         job.StartedAt ??= DateTime.UtcNow;
         job.TotalItems = plannedFiles.Count;
         await _dbContext.SaveChangesAsync(cancellationToken);
 
+        _logger.LogInformation(
+            "Started migration job processing. UserId: {UserId}, SourceProvider: {SourceProvider}, DestinationProvider: {DestinationProvider}, TotalItems: {TotalItems}",
+            routeContext.Mapping.UserId,
+            routeContext.SourceProfile.Provider,
+            routeContext.DestinationProfile.Provider,
+            plannedFiles.Count);
+
         var failedItems = 0;
 
         foreach (var file in plannedFiles)
         {
             cancellationToken.ThrowIfCancellationRequested();
-
-            var transferLog = new FileTransferLog
-            {
-                MigrationJobId = job.Id,
-                FileName = file.FileName,
-                SourceFileId = file.SourceFileId,
-                Size = file.Size,
-                Status = FileTransferStatus.Pending
-            };
-
-            await _dbContext.FileTransferLogs.AddAsync(transferLog, cancellationToken);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            var transferLog = await CreateTransferLogAsync(job.Id, file, cancellationToken);
 
             try
             {
-                await using var sourceStream = await OpenSourceStreamAsync(file, cancellationToken);
-
                 await retryPolicy.ExecuteAsync(
-                    ct => _cloudStorageProvider.TransferFileAsync(
-                        file.SourcePath,
-                        file.DestPath,
-                        sourceStream,
-                        ct),
+                    ct => plugin.TransferFileAsync(routeContext, file, ct),
                     cancellationToken);
 
                 transferLog.Status = FileTransferStatus.Success;
                 transferLog.TransferredAt = DateTime.UtcNow;
                 _logger.LogInformation(
-                    "Transferred file {FileName} for JobId: {JobId}",
-                    file.FileName,
-                    job.Id);
+                    "Transferred migration file. SourceItemId: {SourceItemId}, DestinationItemId: {DestinationItemId}, FileSizeBytes: {FileSizeBytes}",
+                    file.SourceItemId,
+                    file.DestinationRelativePath,
+                    file.SizeBytes);
             }
             catch (Exception ex) when (ex is not OperationCanceledException)
             {
@@ -113,11 +135,10 @@ public class MigrationJobConsumer : IConsumer<MigrationJobStartedEvent>
 
                 _logger.LogError(
                     ex,
-                    "Failed to transfer file {FileName} for JobId: {JobId}. SourcePath: {SourcePath}, DestPath: {DestPath}",
-                    file.FileName,
-                    job.Id,
-                    file.SourcePath,
-                    file.DestPath);
+                    "Failed to transfer migration file. SourceItemId: {SourceItemId}, DestinationItemId: {DestinationItemId}, FileSizeBytes: {FileSizeBytes}",
+                    file.SourceItemId,
+                    file.DestinationRelativePath,
+                    file.SizeBytes);
             }
             finally
             {
@@ -131,12 +152,88 @@ public class MigrationJobConsumer : IConsumer<MigrationJobStartedEvent>
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation(
-            "Completed MigrationJob {JobId}. TotalItems: {TotalItems}, ProcessedItems: {ProcessedItems}, FailedItems: {FailedItems}, FinalStatus: {Status}",
-            job.Id,
+            "Completed migration job. TotalItems: {TotalItems}, ProcessedItems: {ProcessedItems}, FailedItems: {FailedItems}, FinalStatus: {Status}",
             job.TotalItems,
             job.ProcessedItems,
             failedItems,
             job.Status);
+    }
+
+    private async Task<MigrationJob?> LoadJobAsync(Guid jobId, CancellationToken cancellationToken)
+    {
+        return await _dbContext.MigrationJobs
+            .Include(j => j.ProjectMapping)
+                .ThenInclude(m => m!.SourceProfile)
+            .Include(j => j.ProjectMapping)
+                .ThenInclude(m => m!.DestProfile)
+            .FirstOrDefaultAsync(j => j.Id == jobId, cancellationToken);
+    }
+
+    private static bool TryBuildRouteContext(
+        MigrationJob job,
+        out MigrationRouteContext context,
+        out string validationError)
+    {
+        context = null!;
+
+        if (job.ProjectMapping is null)
+        {
+            validationError = "Migration job has no project mapping.";
+            return false;
+        }
+
+        if (job.ProjectMapping.SourceProfile is null || job.ProjectMapping.DestProfile is null)
+        {
+            validationError = "Migration job mapping has no source or destination profile.";
+            return false;
+        }
+
+        var filterConfig = JsonSerializer.Deserialize<FilterConfig>(
+            job.ProjectMapping.FilterConfigJson,
+            JsonOptions) ?? new FilterConfig();
+
+        context = new MigrationRouteContext(
+            job,
+            job.ProjectMapping,
+            job.ProjectMapping.SourceProfile,
+            job.ProjectMapping.DestProfile,
+            filterConfig);
+
+        validationError = string.Empty;
+        return true;
+    }
+
+    private async Task<FileTransferLog> CreateTransferLogAsync(
+        Guid jobId,
+        MigrationFileItem file,
+        CancellationToken cancellationToken)
+    {
+        var transferLog = new FileTransferLog
+        {
+            MigrationJobId = jobId,
+            FileName = file.Name,
+            SourceFileId = file.SourceItemId,
+            Size = file.SizeBytes,
+            Status = FileTransferStatus.Pending
+        };
+
+        await _dbContext.FileTransferLogs.AddAsync(transferLog, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+        return transferLog;
+    }
+
+    private async Task MarkJobFailedAsync(
+        MigrationJob job,
+        string reason,
+        CancellationToken cancellationToken)
+    {
+        job.Status = JobStatus.Failed;
+        job.CompletedAt = DateTime.UtcNow;
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        _logger.LogError(
+            "Marked migration job failed because it cannot be processed. Reason: {Reason}",
+            reason);
     }
 
     private IAsyncPolicy CreateHttpRetryPolicy(Guid jobId)
@@ -150,55 +247,21 @@ public class MigrationJobConsumer : IConsumer<MigrationJobStartedEvent>
                 {
                     _logger.LogWarning(
                         exception,
-                        "Retrying cloud transfer for JobId: {JobId}. Attempt: {Attempt}, Delay: {Delay}",
+                        "Retrying cloud migration operation. JobId: {JobId}, Attempt: {Attempt}, DelayMs: {DelayMs}",
                         jobId,
                         attempt,
-                        delay);
+                        delay.TotalMilliseconds);
                 });
     }
 
     private static bool IsTransientCloudHttpError(HttpRequestException exception)
     {
-        return exception.StatusCode is HttpStatusCode.TooManyRequests or HttpStatusCode.Unauthorized;
+        return exception.StatusCode is HttpStatusCode.TooManyRequests
+            or HttpStatusCode.Unauthorized
+            or HttpStatusCode.RequestTimeout
+            or HttpStatusCode.InternalServerError
+            or HttpStatusCode.BadGateway
+            or HttpStatusCode.ServiceUnavailable
+            or HttpStatusCode.GatewayTimeout;
     }
-
-    private static Task<IReadOnlyList<PlannedTransferFile>> GetFullJobFilePlanAsync(
-        ProjectMapping mapping,
-        CancellationToken cancellationToken)
-    {
-        cancellationToken.ThrowIfCancellationRequested();
-
-        // TODO: Replace with Google Drive recursive listing using mapping.FilterConfigJson.
-        // This placeholder keeps orchestration, retry, and item logging testable now.
-        IReadOnlyList<PlannedTransferFile> files =
-        [
-            new(
-                SourceFileId: mapping.SourcePath,
-                FileName: string.IsNullOrWhiteSpace(mapping.SourcePath) ? "root-placeholder" : mapping.SourcePath,
-                SourcePath: mapping.SourcePath,
-                DestPath: mapping.DestPath,
-                Size: 0)
-        ];
-
-        return Task.FromResult(files);
-    }
-
-    private static Task<Stream> OpenSourceStreamAsync(
-        PlannedTransferFile file,
-        CancellationToken cancellationToken)
-    {
-        cancellationToken.ThrowIfCancellationRequested();
-
-        // TODO: Replace with Google Drive SDK media download stream.
-        // Do not materialize the full file in RAM or on disk here.
-        Stream sourceStream = Stream.Null;
-        return Task.FromResult(sourceStream);
-    }
-
-    private sealed record PlannedTransferFile(
-        string SourceFileId,
-        string FileName,
-        string SourcePath,
-        string DestPath,
-        long Size);
 }

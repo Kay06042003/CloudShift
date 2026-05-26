@@ -6,91 +6,134 @@ using CloudShift.Application.ProjectMappings.Interfaces;
 using CloudShift.Application.ProjectMappings.Models;
 using CloudShift.Domain.Entities;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace CloudShift.Application.ProjectMappings.Handlers;
 
-/// <summary>
-/// Handles <see cref="CreateProjectMappingCommand"/>.
-/// Validates that both profiles exist, serializes <see cref="FilterConfig"/> to JSON,
-/// persists the new mapping, and returns the hydrated DTO.
-/// </summary>
 public sealed class CreateProjectMappingHandler : IRequestHandler<CreateProjectMappingCommand, ProjectMappingDto>
 {
+    private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
+
     private readonly IProjectMappingRepository _mappingRepository;
     private readonly IAppProfileRepository _profileRepository;
-
-    private static readonly JsonSerializerOptions _jsonOptions = new(JsonSerializerDefaults.Web);
+    private readonly IProviderRoutePolicy _routePolicy;
+    private readonly ILogger<CreateProjectMappingHandler> _logger;
 
     public CreateProjectMappingHandler(
         IProjectMappingRepository mappingRepository,
-        IAppProfileRepository profileRepository)
+        IAppProfileRepository profileRepository,
+        IProviderRoutePolicy routePolicy,
+        ILogger<CreateProjectMappingHandler> logger)
     {
         _mappingRepository = mappingRepository;
         _profileRepository = profileRepository;
+        _routePolicy = routePolicy;
+        _logger = logger;
     }
 
     public async Task<ProjectMappingDto> Handle(
         CreateProjectMappingCommand command,
         CancellationToken cancellationToken)
     {
-        // ── Validation: ensure both profiles exist ────────────────────────────
+        _logger.LogInformation(
+            "Creating project mapping. UserId: {UserId}, SourceProfileId: {SourceProfileId}, DestProfileId: {DestProfileId}",
+            command.UserId,
+            command.SourceProfileId,
+            command.DestProfileId);
+
         var sourceProfile = await _profileRepository.GetByIdAsync(command.SourceProfileId, cancellationToken)
-            ?? throw new KeyNotFoundException(
-                $"Source AppProfile '{command.SourceProfileId}' was not found.");
+            ?? throw new KeyNotFoundException($"Source AppProfile '{command.SourceProfileId}' was not found.");
 
         var destProfile = await _profileRepository.GetByIdAsync(command.DestProfileId, cancellationToken)
-            ?? throw new KeyNotFoundException(
-                $"Destination AppProfile '{command.DestProfileId}' was not found.");
+            ?? throw new KeyNotFoundException($"Destination AppProfile '{command.DestProfileId}' was not found.");
 
-        // ── Serialize FilterConfig → JSON string ──────────────────────────────
-        var filterConfigJson = JsonSerializer.Serialize(command.FilterConfig, _jsonOptions);
+        if (sourceProfile.UserId != command.UserId || destProfile.UserId != command.UserId)
+        {
+            _logger.LogWarning(
+                "Rejected project mapping because one or more profiles are not owned by the user. UserId: {UserId}, SourceProfileOwnerId: {SourceProfileOwnerId}, DestProfileOwnerId: {DestProfileOwnerId}",
+                command.UserId,
+                sourceProfile.UserId,
+                destProfile.UserId);
 
-        // ── Build entity ──────────────────────────────────────────────────────
+            throw new UnauthorizedAccessException("Both source and destination profiles must be owned by the mapping user.");
+        }
+
+        if (sourceProfile.Id == destProfile.Id)
+        {
+            throw new InvalidOperationException("Source and destination profiles must be different.");
+        }
+
+        if (!IsSupportedConflictRule(command.ConflictResolutionRule))
+        {
+            throw new InvalidOperationException("ConflictResolutionRule must be Skip, Overwrite, or Rename.");
+        }
+
+        if (!_routePolicy.CanMigrate(sourceProfile.Provider, destProfile.Provider))
+        {
+            _logger.LogWarning(
+                "Rejected project mapping because provider route is unsupported. UserId: {UserId}, SourceProvider: {SourceProvider}, DestinationProvider: {DestinationProvider}",
+                command.UserId,
+                sourceProfile.Provider,
+                destProfile.Provider);
+
+            throw new InvalidOperationException(
+                $"Migration route '{sourceProfile.Provider}' to '{destProfile.Provider}' is not supported.");
+        }
+
         var mapping = new ProjectMapping
         {
-            UserId                = command.UserId,
-            Name                  = command.Name,
-            SourceProfileId       = command.SourceProfileId,
-            DestProfileId         = command.DestProfileId,
-            SourcePath            = command.SourcePath,
-            DestPath              = command.DestPath,
-            FilterConfigJson      = filterConfigJson,
+            UserId = command.UserId,
+            Name = command.Name,
+            SourceProfileId = command.SourceProfileId,
+            DestProfileId = command.DestProfileId,
+            SourcePath = command.SourcePath,
+            DestPath = command.DestPath,
+            FilterConfigJson = JsonSerializer.Serialize(command.FilterConfig, JsonOptions),
             ConflictResolutionRule = command.ConflictResolutionRule,
-            CreatedAt             = DateTime.UtcNow,
-            UpdatedAt             = DateTime.UtcNow
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
         };
 
         var saved = await _mappingRepository.AddAsync(mapping, cancellationToken);
-
-        // Attach the navigation properties loaded above for DTO mapping
         saved.SourceProfile = sourceProfile;
-        saved.DestProfile   = destProfile;
+        saved.DestProfile = destProfile;
+
+        _logger.LogInformation(
+            "Created project mapping. MappingId: {MappingId}, UserId: {UserId}, SourceProvider: {SourceProvider}, DestinationProvider: {DestinationProvider}",
+            saved.Id,
+            saved.UserId,
+            sourceProfile.Provider,
+            destProfile.Provider);
 
         return MapToDto(saved, command.FilterConfig);
     }
 
-    // ─── Mapping helpers ──────────────────────────────────────────────────────
-
-    internal static ProjectMappingDto MapToDto(ProjectMapping m, FilterConfig? filterConfig = null)
+    internal static ProjectMappingDto MapToDto(ProjectMapping mapping, FilterConfig? filterConfig = null)
     {
         var config = filterConfig
-            ?? JsonSerializer.Deserialize<FilterConfig>(m.FilterConfigJson, _jsonOptions)
+            ?? JsonSerializer.Deserialize<FilterConfig>(mapping.FilterConfigJson, JsonOptions)
             ?? new FilterConfig();
 
         return new ProjectMappingDto(
-            m.Id,
-            m.UserId,
-            m.Name,
-            m.SourceProfileId,
-            m.SourceProfile?.Provider.ToString() ?? string.Empty,
-            m.DestProfileId,
-            m.DestProfile?.Provider.ToString() ?? string.Empty,
-            m.SourcePath,
-            m.DestPath,
+            mapping.Id,
+            mapping.UserId,
+            mapping.Name,
+            mapping.SourceProfileId,
+            mapping.SourceProfile?.Provider.ToString() ?? string.Empty,
+            mapping.DestProfileId,
+            mapping.DestProfile?.Provider.ToString() ?? string.Empty,
+            mapping.SourcePath,
+            mapping.DestPath,
             config,
-            m.ConflictResolutionRule,
-            m.CreatedAt,
-            m.UpdatedAt
-        );
+            mapping.ConflictResolutionRule,
+            mapping.CreatedAt,
+            mapping.UpdatedAt);
+    }
+
+    private static bool IsSupportedConflictRule(string conflictResolutionRule)
+    {
+        return conflictResolutionRule.Equals("Skip", StringComparison.OrdinalIgnoreCase)
+            || conflictResolutionRule.Equals("Overwrite", StringComparison.OrdinalIgnoreCase)
+            || conflictResolutionRule.Equals("Rename", StringComparison.OrdinalIgnoreCase);
     }
 }

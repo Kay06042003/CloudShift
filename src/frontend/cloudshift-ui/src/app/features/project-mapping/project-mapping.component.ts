@@ -57,7 +57,7 @@ import { FormsModule } from '@angular/forms';
                   <label for="src-profile">Source Profile *</label>
                   <select id="src-profile" class="cs-select" [(ngModel)]="newMapping.sourceProfileId">
                     <option value="">Select profile...</option>
-                    @for (profile of appProfiles; track profile.id) {
+                    @for (profile of sourceProfiles; track profile.id) {
                       <option [value]="profile.id">{{ profile.name }}</option>
                     }
                   </select>
@@ -79,7 +79,7 @@ import { FormsModule } from '@angular/forms';
                   <label for="dest-profile">Destination Profile *</label>
                   <select id="dest-profile" class="cs-select" [(ngModel)]="newMapping.destinationProfileId">
                     <option value="">Select profile...</option>
-                    @for (profile of appProfiles; track profile.id) {
+                    @for (profile of destinationProfiles; track profile.id) {
                       <option [value]="profile.id">{{ profile.name }}</option>
                     }
                   </select>
@@ -127,34 +127,7 @@ import { FormsModule } from '@angular/forms';
             </div>
           </div>
 
-          <!-- Section 3: Execution Rules -->
-          <div class="form-section">
-            <div class="section-header">
-              <span class="material-symbols-outlined section-icon">rule</span>
-              <div>
-                <div class="section-title">Execution Rules</div>
-                <div class="section-subtitle">Automated actions triggered by job lifecycle events.</div>
-              </div>
-            </div>
-            <div class="rules-grid">
-              @for (rule of defaultRules; track rule.id) {
-                <div class="rule-item" [class.enabled]="rule.enabled">
-                  <div class="rule-toggle-area">
-                    <label class="toggle-switch">
-                      <input type="checkbox" [(ngModel)]="rule.enabled" [id]="'rule-' + rule.id">
-                      <span class="toggle-slider"></span>
-                    </label>
-                  </div>
-                  <div class="rule-info">
-                    <div class="rule-name">{{ rule.name }}</div>
-                    <div class="rule-desc">{{ rule.description }}</div>
-                  </div>
-                </div>
-              }
-            </div>
-          </div>
-
-          <!-- Section 4: Job Type -->
+          <!-- Section 3: Job Type -->
           <div class="form-section">
             <div class="section-header">
               <span class="material-symbols-outlined section-icon">rocket_launch</span>
@@ -180,7 +153,7 @@ import { FormsModule } from '@angular/forms';
 
             <div class="execution-options">
               <div class="form-group">
-                <label>Options</label>
+                <label>Transfer Options</label>
                 <div class="checkbox-group">
                   @for (opt of booleanOptions; track opt.key) {
                     <label class="checkbox-item">
@@ -195,7 +168,6 @@ import { FormsModule } from '@angular/forms';
 
           <!-- Form Actions -->
           <div class="form-actions">
-            <button class="btn-secondary" id="save-draft-btn" (click)="saveDraft()">Save as Draft</button>
             <button class="btn-secondary" (click)="showCreateForm.set(false)">Cancel</button>
             <button class="btn-primary" id="create-mapping-submit-btn" (click)="createMapping()">
               <span class="material-symbols-outlined icon-sm">rocket_launch</span>
@@ -647,8 +619,7 @@ export class ProjectMappingComponent implements OnInit {
     destinationPath: '',
     filters: [],
     jobType: 'full',
-    preservePermissions: true,
-    deleteSourceAfterCopy: false,
+    skipHiddenFiles: true,
     overwriteExisting: false
   };
 
@@ -657,22 +628,20 @@ export class ProjectMappingComponent implements OnInit {
     { value: 'delta', label: 'Delta Sync', icon: 'difference', description: 'Sync differences; add, update and delete to match source.' },
   ];
 
-  defaultRules = [
-    { id: 'r1', name: 'Retry on Failure', description: 'Retry failed files up to 3 times automatically.', enabled: true },
-    { id: 'r2', name: 'Email on Completion', description: 'Send email notification when job completes.', enabled: true },
-    { id: 'r3', name: 'Skip Hidden Files', description: 'Skip files and folders starting with a dot (.).' , enabled: true },
-    { id: 'r4', name: 'Checksum Validation', description: 'Verify file integrity via MD5 checksum after transfer.', enabled: false },
-    { id: 'r5', name: 'Pause on High Error Rate', description: 'Auto-pause if error rate exceeds 5%.', enabled: false },
-    { id: 'r6', name: 'Preserve Timestamps', description: 'Keep original file creation and modification timestamps.', enabled: true },
-  ];
-
-  booleanOptions: Array<{ key: 'preservePermissions' | 'deleteSourceAfterCopy' | 'overwriteExisting'; label: string }> = [
-    { key: 'preservePermissions', label: 'Preserve file permissions' },
-    { key: 'deleteSourceAfterCopy', label: 'Delete source files after successful copy' },
+  booleanOptions: Array<{ key: 'skipHiddenFiles' | 'overwriteExisting'; label: string }> = [
+    { key: 'skipHiddenFiles', label: 'Skip hidden files and folders' },
     { key: 'overwriteExisting', label: 'Overwrite existing files at destination' },
   ];
 
   constructor(private api: CloudShiftApiService) {}
+
+  get sourceProfiles(): IAppProfile[] {
+    return this.appProfiles.filter(profile => profile.provider === 'google-drive');
+  }
+
+  get destinationProfiles(): IAppProfile[] {
+    return this.appProfiles.filter(profile => profile.provider === 'onedrive');
+  }
 
   ngOnInit() {
     this.loadMappings();
@@ -704,11 +673,6 @@ export class ProjectMappingComponent implements OnInit {
 
   removeFilter(id: string) {
     this.newMapping.filters = this.newMapping.filters.filter((f: IPathFilter) => f.id !== id);
-  }
-
-  saveDraft() {
-    console.log('Saving as draft', this.newMapping);
-    this.showCreateForm.set(false);
   }
 
   createMapping() {

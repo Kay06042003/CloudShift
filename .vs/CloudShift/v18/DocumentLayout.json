@@ -3,8 +3,19 @@
   "WorkspaceRootPath": "D:\\CloudShift\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EBD2AC4E-2006-4CFF-BFD2-4D925CE5789A}|src\\backend\\CloudShift.Worker\\CloudShift.Worker.csproj|d:\\cloudshift\\src\\backend\\cloudshift.worker\\consumers\\migrationjobconsumer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EBD2AC4E-2006-4CFF-BFD2-4D925CE5789A}|src\\backend\\CloudShift.Worker\\CloudShift.Worker.csproj|solutionrelative:src\\backend\\cloudshift.worker\\consumers\\migrationjobconsumer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{80BA9A20-5A20-48BA-BB06-0E0789E1EE5B}|src\\backend\\CloudShift.Api\\CloudShift.Api.csproj|d:\\cloudshift\\src\\backend\\cloudshift.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{80BA9A20-5A20-48BA-BB06-0E0789E1EE5B}|src\\backend\\CloudShift.Api\\CloudShift.Api.csproj|solutionrelative:src\\backend\\cloudshift.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{80BA9A20-5A20-48BA-BB06-0E0789E1EE5B}|src\\backend\\CloudShift.Api\\CloudShift.Api.csproj|d:\\cloudshift\\src\\backend\\cloudshift.api\\controllers\\oauthproviderappscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{80BA9A20-5A20-48BA-BB06-0E0789E1EE5B}|src\\backend\\CloudShift.Api\\CloudShift.Api.csproj|solutionrelative:src\\backend\\cloudshift.api\\controllers\\oauthproviderappscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{80BA9A20-5A20-48BA-BB06-0E0789E1EE5B}|src\\backend\\CloudShift.Api\\CloudShift.Api.csproj|d:\\cloudshift\\src\\backend\\cloudshift.api\\controllers\\appprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{80BA9A20-5A20-48BA-BB06-0E0789E1EE5B}|src\\backend\\CloudShift.Api\\CloudShift.Api.csproj|solutionrelative:src\\backend\\cloudshift.api\\controllers\\appprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/CloudShiftDb/True/SqlTable/dbo.AppProfiles.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EBD2AC4E-2006-4CFF-BFD2-4D925CE5789A}|src\\backend\\CloudShift.Worker\\CloudShift.Worker.csproj|d:\\cloudshift\\src\\backend\\cloudshift.worker\\worker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -22,13 +33,13 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Worker.cs",
               "DocumentMoniker": "D:\\CloudShift\\src\\backend\\CloudShift.Worker\\Worker.cs",
               "RelativeDocumentMoniker": "src\\backend\\CloudShift.Worker\\Worker.cs",
               "ToolTip": "D:\\CloudShift\\src\\backend\\CloudShift.Worker\\Worker.cs",
               "RelativeToolTip": "src\\backend\\CloudShift.Worker\\Worker.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-24T12:56:05.635Z",
               "IsPinned": true,
@@ -49,14 +60,50 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "MigrationJobConsumer.cs",
-              "DocumentMoniker": "D:\\CloudShift\\src\\backend\\CloudShift.Worker\\Consumers\\MigrationJobConsumer.cs",
-              "RelativeDocumentMoniker": "src\\backend\\CloudShift.Worker\\Consumers\\MigrationJobConsumer.cs",
-              "ToolTip": "D:\\CloudShift\\src\\backend\\CloudShift.Worker\\Consumers\\MigrationJobConsumer.cs",
-              "RelativeToolTip": "src\\backend\\CloudShift.Worker\\Consumers\\MigrationJobConsumer.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBMAAAAFAAAAAAAAAA==",
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\CloudShift\\src\\backend\\CloudShift.Api\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "src\\backend\\CloudShift.Api\\Properties\\launchSettings.json",
+              "ToolTip": "D:\\CloudShift\\src\\backend\\CloudShift.Api\\Properties\\launchSettings.json",
+              "RelativeToolTip": "src\\backend\\CloudShift.Api\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-05-25T07:15:20.058Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "OAuthProviderAppsController.cs",
+              "DocumentMoniker": "D:\\CloudShift\\src\\backend\\CloudShift.Api\\Controllers\\OAuthProviderAppsController.cs",
+              "RelativeDocumentMoniker": "src\\backend\\CloudShift.Api\\Controllers\\OAuthProviderAppsController.cs",
+              "ToolTip": "D:\\CloudShift\\src\\backend\\CloudShift.Api\\Controllers\\OAuthProviderAppsController.cs",
+              "RelativeToolTip": "src\\backend\\CloudShift.Api\\Controllers\\OAuthProviderAppsController.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAQwCMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-24T12:56:00.67Z",
+              "WhenOpened": "2026-05-25T07:07:15.484Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AppProfileController.cs",
+              "DocumentMoniker": "D:\\CloudShift\\src\\backend\\CloudShift.Api\\Controllers\\AppProfileController.cs",
+              "RelativeDocumentMoniker": "src\\backend\\CloudShift.Api\\Controllers\\AppProfileController.cs",
+              "ToolTip": "D:\\CloudShift\\src\\backend\\CloudShift.Api\\Controllers\\AppProfileController.cs",
+              "RelativeToolTip": "src\\backend\\CloudShift.Api\\Controllers\\AppProfileController.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAxwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-25T07:06:47.495Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "dbo.AppProfiles [Data]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/CloudShiftDb/True/SqlTable/dbo.AppProfiles.sql",
+              "ToolTip": "dbo.AppProfiles [Data]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2026-05-25T07:05:42.535Z",
               "EditorCaption": ""
             }
           ]

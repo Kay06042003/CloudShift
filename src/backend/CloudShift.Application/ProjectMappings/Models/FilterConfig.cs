@@ -36,4 +36,7 @@ public sealed class FilterConfig
     /// Empty list = include all filenames.
     /// </summary>
     public List<string> IncludeNamePatterns { get; set; } = new();
+
+    /// <summary>Skip hidden files and folders such as ".gitignore" and ".config".</summary>
+    public bool SkipHiddenFiles { get; set; } = true;
 }

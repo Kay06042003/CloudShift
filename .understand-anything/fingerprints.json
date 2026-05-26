@@ -1,0 +1,4298 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "d330fe2759afd55e0db9f327018d726786cf5de6",
+  "generatedAt": "2026-05-25T05:03:54.711Z",
+  "files": {
+    "AGENTS.md": {
+      "filePath": "AGENTS.md",
+      "contentHash": "6172b6dd50adf004f75676d74b1eb516695c52679bc2ea1e5f5376903d8ef92b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 48,
+      "hasStructuralAnalysis": true
+    },
+    "ARCHITECTURE.MD": {
+      "filePath": "ARCHITECTURE.MD",
+      "contentHash": "ab1338c121e9cb5c13add5a63e069ea9b2bf290ca8116450943d0bb893d0700c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 40,
+      "hasStructuralAnalysis": true
+    },
+    "CloudShift.sln": {
+      "filePath": "CloudShift.sln",
+      "contentHash": "8719e78130b69cd1e09836f3d628758dc2b02a2372a055d87149550d51e0fa8d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 59,
+      "hasStructuralAnalysis": false
+    },
+    "global.json": {
+      "filePath": "global.json",
+      "contentHash": "ee2b94b070a675af6ca9e0b10f9bb6681bc94ee2d6e8a3784f9c9f5efe1f2071",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 6,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Api/appsettings.Development.json": {
+      "filePath": "src/backend/CloudShift.Api/appsettings.Development.json",
+      "contentHash": "73f95f9e0ceb205fc1c4dc50c07697fcfa29d7087868c2aef1d504cb38c771ec",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 9,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Api/appsettings.json": {
+      "filePath": "src/backend/CloudShift.Api/appsettings.json",
+      "contentHash": "5bbd58fe2764346677428b946e3dc361d0045d7afefe7c793ee472a0bbe05460",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 13,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Api/CloudShift.Api.csproj": {
+      "filePath": "src/backend/CloudShift.Api/CloudShift.Api.csproj",
+      "contentHash": "d8a0c3a60b00ca9fe38299950d35d438ef1194433d2d2add21887695797b8e7e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 26,
+      "hasStructuralAnalysis": false
+    },
+    "src/backend/CloudShift.Api/CloudShift.Api.http": {
+      "filePath": "src/backend/CloudShift.Api/CloudShift.Api.http",
+      "contentHash": "594c262522e152b23322df8fb856a88852afb7770fb4c37588157a771500fbf2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 7,
+      "hasStructuralAnalysis": false
+    },
+    "src/backend/CloudShift.Api/Controllers/AppProfileController.cs": {
+      "filePath": "src/backend/CloudShift.Api/Controllers/AppProfileController.cs",
+      "contentHash": "9a1958e8712e6bf3ea5b65aa47eb9ffd3b32faacd5c3658b2aee3c9142ecd835",
+      "functions": [
+        {
+          "name": "AppProfileController",
+          "params": [
+            "mediator"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "AddAppProfile",
+          "params": [
+            "request",
+            "cancellationToken"
+          ],
+          "returnType": "Task<IActionResult>",
+          "exported": true,
+          "lineCount": 26
+        },
+        {
+          "name": "GetAppProfiles",
+          "params": [
+            "userId",
+            "cancellationToken"
+          ],
+          "returnType": "Task<IActionResult>",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "TestConnection",
+          "params": [
+            "id"
+          ],
+          "returnType": "IActionResult",
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [
+        {
+          "name": "AppProfileController",
+          "methods": [
+            "AppProfileController",
+            "AddAppProfile",
+            "GetAppProfiles",
+            "TestConnection"
+          ],
+          "properties": [
+            "_mediator"
+          ],
+          "exported": true,
+          "lineCount": 87
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Application.AppProfiles.Commands",
+          "specifiers": [
+            "Commands"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.AppProfiles.DTOs",
+          "specifiers": [
+            "DTOs"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.AppProfiles.Queries",
+          "specifiers": [
+            "Queries"
+          ]
+        },
+        {
+          "source": "MediatR",
+          "specifiers": [
+            "MediatR"
+          ]
+        },
+        {
+          "source": "Microsoft.AspNetCore.Mvc",
+          "specifiers": [
+            "Mvc"
+          ]
+        }
+      ],
+      "exports": [
+        "AppProfileController",
+        "AddAppProfile",
+        "GetAppProfiles",
+        "TestConnection",
+        "AppProfileController"
+      ],
+      "totalLines": 111,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Api/Controllers/ProjectMappingController.cs": {
+      "filePath": "src/backend/CloudShift.Api/Controllers/ProjectMappingController.cs",
+      "contentHash": "e36c5756509b3a521a85c28a3d2489922674174ee863d59387006456dee4428d",
+      "functions": [
+        {
+          "name": "ProjectMappingController",
+          "params": [
+            "mediator"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "CreateMapping",
+          "params": [
+            "request",
+            "cancellationToken"
+          ],
+          "returnType": "Task<IActionResult>",
+          "exported": true,
+          "lineCount": 36
+        },
+        {
+          "name": "GetMappings",
+          "params": [
+            "userId",
+            "cancellationToken"
+          ],
+          "returnType": "Task<IActionResult>",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "GetMigrationJobs",
+          "params": [
+            "userId",
+            "cancellationToken"
+          ],
+          "returnType": "Task<IActionResult>",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "StartMigration",
+          "params": [
+            "id",
+            "request",
+            "cancellationToken"
+          ],
+          "returnType": "Task<IActionResult>",
+          "exported": true,
+          "lineCount": 25
+        }
+      ],
+      "classes": [
+        {
+          "name": "ProjectMappingController",
+          "methods": [
+            "ProjectMappingController",
+            "CreateMapping",
+            "GetMappings",
+            "GetMigrationJobs",
+            "StartMigration"
+          ],
+          "properties": [
+            "_mediator"
+          ],
+          "exported": true,
+          "lineCount": 133
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Application.ProjectMappings.Commands",
+          "specifiers": [
+            "Commands"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.ProjectMappings.DTOs",
+          "specifiers": [
+            "DTOs"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.ProjectMappings.Models",
+          "specifiers": [
+            "Models"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.ProjectMappings.Queries",
+          "specifiers": [
+            "Queries"
+          ]
+        },
+        {
+          "source": "MediatR",
+          "specifiers": [
+            "MediatR"
+          ]
+        },
+        {
+          "source": "Microsoft.AspNetCore.Mvc",
+          "specifiers": [
+            "Mvc"
+          ]
+        }
+      ],
+      "exports": [
+        "ProjectMappingController",
+        "CreateMapping",
+        "GetMappings",
+        "GetMigrationJobs",
+        "StartMigration",
+        "ProjectMappingController"
+      ],
+      "totalLines": 155,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Api/Program.cs": {
+      "filePath": "src/backend/CloudShift.Api/Program.cs",
+      "contentHash": "c825f6f9b321712d28dcc8b6aeda69f964d5462993fcfa189931f52b3eee8bf6",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "CloudShift.Application",
+          "specifiers": [
+            "Application"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Entities",
+          "specifiers": [
+            "Entities"
+          ]
+        },
+        {
+          "source": "CloudShift.Infrastructure",
+          "specifiers": [
+            "Infrastructure"
+          ]
+        },
+        {
+          "source": "CloudShift.Infrastructure.Data",
+          "specifiers": [
+            "Data"
+          ]
+        },
+        {
+          "source": "MassTransit",
+          "specifiers": [
+            "MassTransit"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore",
+          "specifiers": [
+            "EntityFrameworkCore"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 92,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Api/Properties/launchSettings.json": {
+      "filePath": "src/backend/CloudShift.Api/Properties/launchSettings.json",
+      "contentHash": "862dadc891710c07297c5db8483620bd1703810783bb4b190f38e8253cf0676a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 42,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/AppProfiles/Commands/AddAppProfileCommand.cs": {
+      "filePath": "src/backend/CloudShift.Application/AppProfiles/Commands/AddAppProfileCommand.cs",
+      "contentHash": "e7bd48aee9441923a385fb7a0437d2ca8bae9c12b9555dfe9764c6de9fee7837",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "CloudShift.Application.AppProfiles.DTOs",
+          "specifiers": [
+            "DTOs"
+          ]
+        },
+        {
+          "source": "MediatR",
+          "specifiers": [
+            "MediatR"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/AppProfiles/DTOs/AddAppProfileRequest.cs": {
+      "filePath": "src/backend/CloudShift.Application/AppProfiles/DTOs/AddAppProfileRequest.cs",
+      "contentHash": "c6c7f7731b53b4bdc1e706fe12f78867c2461fda530b7869ea5407658ddbe389",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "CloudShift.Domain.Enums",
+          "specifiers": [
+            "Enums"
+          ]
+        },
+        {
+          "source": "System.ComponentModel.DataAnnotations",
+          "specifiers": [
+            "DataAnnotations"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 19,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/AppProfiles/DTOs/AppProfileDto.cs": {
+      "filePath": "src/backend/CloudShift.Application/AppProfiles/DTOs/AppProfileDto.cs",
+      "contentHash": "5108dacf7121dd44a55bb3612897e1d76da41b0bb45726374f2268c6da472648",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "CloudShift.Domain.Enums",
+          "specifiers": [
+            "Enums"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/AppProfiles/Handlers/AddAppProfileHandler.cs": {
+      "filePath": "src/backend/CloudShift.Application/AppProfiles/Handlers/AddAppProfileHandler.cs",
+      "contentHash": "5448d283f99542d3cba9c5e7da7db870467acc7109ae4400eb6e049ac3148692",
+      "functions": [
+        {
+          "name": "AddAppProfileHandler",
+          "params": [
+            "repository"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "Handle",
+          "params": [
+            "command",
+            "cancellationToken"
+          ],
+          "returnType": "Task<AppProfileDto>",
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "MapToDto",
+          "params": [
+            "p"
+          ],
+          "returnType": "AppProfileDto",
+          "exported": false,
+          "lineCount": 9
+        }
+      ],
+      "classes": [
+        {
+          "name": "AddAppProfileHandler",
+          "methods": [
+            "AddAppProfileHandler",
+            "Handle",
+            "MapToDto"
+          ],
+          "properties": [
+            "_repository"
+          ],
+          "exported": true,
+          "lineCount": 37
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Application.AppProfiles.Commands",
+          "specifiers": [
+            "Commands"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.AppProfiles.DTOs",
+          "specifiers": [
+            "DTOs"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.AppProfiles.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Entities",
+          "specifiers": [
+            "Entities"
+          ]
+        },
+        {
+          "source": "MediatR",
+          "specifiers": [
+            "MediatR"
+          ]
+        }
+      ],
+      "exports": [
+        "AddAppProfileHandler",
+        "Handle",
+        "AddAppProfileHandler"
+      ],
+      "totalLines": 51,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/AppProfiles/Handlers/GetAppProfilesHandler.cs": {
+      "filePath": "src/backend/CloudShift.Application/AppProfiles/Handlers/GetAppProfilesHandler.cs",
+      "contentHash": "c3471e9a517e529bcc2fa291b6dab27e277bc96761272222de9e53f08ec20bfd",
+      "functions": [
+        {
+          "name": "GetAppProfilesHandler",
+          "params": [
+            "repository"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "Handle",
+          "params": [
+            "query",
+            "cancellationToken"
+          ],
+          "returnType": "Task<IReadOnlyList<AppProfileDto>>",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "MapToDto",
+          "params": [
+            "p"
+          ],
+          "returnType": "AppProfileDto",
+          "exported": false,
+          "lineCount": 9
+        }
+      ],
+      "classes": [
+        {
+          "name": "GetAppProfilesHandler",
+          "methods": [
+            "GetAppProfilesHandler",
+            "Handle",
+            "MapToDto"
+          ],
+          "properties": [
+            "_repository"
+          ],
+          "exported": true,
+          "lineCount": 26
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Application.AppProfiles.DTOs",
+          "specifiers": [
+            "DTOs"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.AppProfiles.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.AppProfiles.Queries",
+          "specifiers": [
+            "Queries"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Entities",
+          "specifiers": [
+            "Entities"
+          ]
+        },
+        {
+          "source": "MediatR",
+          "specifiers": [
+            "MediatR"
+          ]
+        }
+      ],
+      "exports": [
+        "GetAppProfilesHandler",
+        "Handle",
+        "GetAppProfilesHandler"
+      ],
+      "totalLines": 39,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/AppProfiles/Interfaces/IAppProfileRepository.cs": {
+      "filePath": "src/backend/CloudShift.Application/AppProfiles/Interfaces/IAppProfileRepository.cs",
+      "contentHash": "99a00925b04a58d6313214231dc6f95217a4eeadaf17fb694dc08b72450ad18b",
+      "functions": [],
+      "classes": [
+        {
+          "name": "IAppProfileRepository",
+          "methods": [
+            "AddAsync",
+            "GetByUserIdAsync",
+            "GetByIdAsync"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 11
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Domain.Entities",
+          "specifiers": [
+            "Entities"
+          ]
+        }
+      ],
+      "exports": [
+        "IAppProfileRepository"
+      ],
+      "totalLines": 20,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/AppProfiles/Queries/GetAppProfilesQuery.cs": {
+      "filePath": "src/backend/CloudShift.Application/AppProfiles/Queries/GetAppProfilesQuery.cs",
+      "contentHash": "8798817c8c5436cc284638a0d4e95b8fb9cb96b1778c882c5a149252ef290e99",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "CloudShift.Application.AppProfiles.DTOs",
+          "specifiers": [
+            "DTOs"
+          ]
+        },
+        {
+          "source": "MediatR",
+          "specifiers": [
+            "MediatR"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 10,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/Class1.cs": {
+      "filePath": "src/backend/CloudShift.Application/Class1.cs",
+      "contentHash": "a8b4d340bbbc7a084d9b7d396fce1134597f12da758030547e84e09550cc6608",
+      "functions": [],
+      "classes": [
+        {
+          "name": "Class1",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "imports": [],
+      "exports": [
+        "Class1"
+      ],
+      "totalLines": 7,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/CloudShift.Application.csproj": {
+      "filePath": "src/backend/CloudShift.Application/CloudShift.Application.csproj",
+      "contentHash": "ff575b9be925e404b65f7efeda2a50c5d335133e3c9248f60b2a22d2e6fadc72",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 19,
+      "hasStructuralAnalysis": false
+    },
+    "src/backend/CloudShift.Application/Common/Interfaces/ICloudStorageProvider.cs": {
+      "filePath": "src/backend/CloudShift.Application/Common/Interfaces/ICloudStorageProvider.cs",
+      "contentHash": "4d9020bb30a2b2fc35f05dcb1e3d68456f4d191d357786a6c5d7f25f06e6d268",
+      "functions": [],
+      "classes": [
+        {
+          "name": "ICloudStorageProvider",
+          "methods": [
+            "TransferFileAsync"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "imports": [
+        {
+          "source": "System.IO",
+          "specifiers": [
+            "IO"
+          ]
+        }
+      ],
+      "exports": [
+        "ICloudStorageProvider"
+      ],
+      "totalLines": 13,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/Common/Interfaces/IEventPublisher.cs": {
+      "filePath": "src/backend/CloudShift.Application/Common/Interfaces/IEventPublisher.cs",
+      "contentHash": "df295b46991b46a219a6ecac9d33cce3a62e1ee2580a318b567a2d3bd034467d",
+      "functions": [],
+      "classes": [
+        {
+          "name": "IEventPublisher",
+          "methods": [
+            "PublishAsync"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Domain.Messages",
+          "specifiers": [
+            "Messages"
+          ]
+        }
+      ],
+      "exports": [
+        "IEventPublisher"
+      ],
+      "totalLines": 17,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/DependencyInjection.cs": {
+      "filePath": "src/backend/CloudShift.Application/DependencyInjection.cs",
+      "contentHash": "1fc582af2b5911887430316a7c0ee8d7b13e35dc797bf7fcf01d9102a52f3ad8",
+      "functions": [
+        {
+          "name": "AddApplicationServices",
+          "params": [
+            "services"
+          ],
+          "returnType": "IServiceCollection",
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [
+        {
+          "name": "DependencyInjection",
+          "methods": [
+            "AddApplicationServices"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 11
+        }
+      ],
+      "imports": [
+        {
+          "source": "Microsoft.Extensions.DependencyInjection",
+          "specifiers": [
+            "DependencyInjection"
+          ]
+        }
+      ],
+      "exports": [
+        "AddApplicationServices",
+        "DependencyInjection"
+      ],
+      "totalLines": 19,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/ProjectMappings/Commands/CreateProjectMappingCommand.cs": {
+      "filePath": "src/backend/CloudShift.Application/ProjectMappings/Commands/CreateProjectMappingCommand.cs",
+      "contentHash": "b67bfc0cb7f8bda7fe00964515bdad8966d0d84f7427ccd1d1f34c9a4d4f77d4",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "CloudShift.Application.ProjectMappings.DTOs",
+          "specifiers": [
+            "DTOs"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.ProjectMappings.Models",
+          "specifiers": [
+            "Models"
+          ]
+        },
+        {
+          "source": "MediatR",
+          "specifiers": [
+            "MediatR"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/ProjectMappings/Commands/StartMigrationJobCommand.cs": {
+      "filePath": "src/backend/CloudShift.Application/ProjectMappings/Commands/StartMigrationJobCommand.cs",
+      "contentHash": "93c54db4c6d8e051d6e22fb717c5d887c6e1e13e4d68c2e3ffff17d7247bad86",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "CloudShift.Application.ProjectMappings.DTOs",
+          "specifiers": [
+            "DTOs"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Enums",
+          "specifiers": [
+            "Enums"
+          ]
+        },
+        {
+          "source": "MediatR",
+          "specifiers": [
+            "MediatR"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 16,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/ProjectMappings/DTOs/CreateProjectMappingRequest.cs": {
+      "filePath": "src/backend/CloudShift.Application/ProjectMappings/DTOs/CreateProjectMappingRequest.cs",
+      "contentHash": "7a6a1e89b6d66961dac20bee1e08e6ba5cd2df5ec3c267a57f98b2f9c354d761",
+      "functions": [],
+      "classes": [
+        {
+          "name": "CreateProjectMappingRequest",
+          "methods": [],
+          "properties": [
+            "UserId",
+            "Name",
+            "SourceProfileId",
+            "DestProfileId",
+            "SourcePath",
+            "DestPath",
+            "FilterConfig",
+            "ConflictResolutionRule"
+          ],
+          "exported": true,
+          "lineCount": 32
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Application.ProjectMappings.Models",
+          "specifiers": [
+            "Models"
+          ]
+        }
+      ],
+      "exports": [
+        "UserId",
+        "Name",
+        "SourceProfileId",
+        "DestProfileId",
+        "SourcePath",
+        "DestPath",
+        "FilterConfig",
+        "ConflictResolutionRule",
+        "CreateProjectMappingRequest"
+      ],
+      "totalLines": 40,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/ProjectMappings/DTOs/MigrationJobDto.cs": {
+      "filePath": "src/backend/CloudShift.Application/ProjectMappings/DTOs/MigrationJobDto.cs",
+      "contentHash": "3998e484d650cda121396ba4462bfcdaf8084ff49d5ed9b802024f7968f906c5",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "CloudShift.Domain.Enums",
+          "specifiers": [
+            "Enums"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/ProjectMappings/DTOs/ProjectMappingDto.cs": {
+      "filePath": "src/backend/CloudShift.Application/ProjectMappings/DTOs/ProjectMappingDto.cs",
+      "contentHash": "9a4081929545bda4de7e4e635baa8d706fd48796f3790ec71a9fbc0d95915dd1",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "CloudShift.Application.ProjectMappings.Models",
+          "specifiers": [
+            "Models"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 24,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/ProjectMappings/Handlers/CreateProjectMappingHandler.cs": {
+      "filePath": "src/backend/CloudShift.Application/ProjectMappings/Handlers/CreateProjectMappingHandler.cs",
+      "contentHash": "ecec2d35ec1839711ee9b4ecc97433187499aa71aaa770e5f0c4f1feaf78cb6d",
+      "functions": [
+        {
+          "name": "CreateProjectMappingHandler",
+          "params": [
+            "mappingRepository",
+            "profileRepository"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "Handle",
+          "params": [
+            "command",
+            "cancellationToken"
+          ],
+          "returnType": "Task<ProjectMappingDto>",
+          "exported": true,
+          "lineCount": 39
+        },
+        {
+          "name": "MapToDto",
+          "params": [
+            "m",
+            "filterConfig"
+          ],
+          "returnType": "ProjectMappingDto",
+          "exported": false,
+          "lineCount": 22
+        }
+      ],
+      "classes": [
+        {
+          "name": "CreateProjectMappingHandler",
+          "methods": [
+            "CreateProjectMappingHandler",
+            "Handle",
+            "MapToDto"
+          ],
+          "properties": [
+            "_mappingRepository",
+            "_profileRepository",
+            "_jsonOptions"
+          ],
+          "exported": true,
+          "lineCount": 80
+        }
+      ],
+      "imports": [
+        {
+          "source": "System.Text.Json",
+          "specifiers": [
+            "Json"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.AppProfiles.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.ProjectMappings.Commands",
+          "specifiers": [
+            "Commands"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.ProjectMappings.DTOs",
+          "specifiers": [
+            "DTOs"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.ProjectMappings.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.ProjectMappings.Models",
+          "specifiers": [
+            "Models"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Entities",
+          "specifiers": [
+            "Entities"
+          ]
+        },
+        {
+          "source": "MediatR",
+          "specifiers": [
+            "MediatR"
+          ]
+        }
+      ],
+      "exports": [
+        "CreateProjectMappingHandler",
+        "Handle",
+        "CreateProjectMappingHandler"
+      ],
+      "totalLines": 97,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/ProjectMappings/Handlers/GetMigrationJobsHandler.cs": {
+      "filePath": "src/backend/CloudShift.Application/ProjectMappings/Handlers/GetMigrationJobsHandler.cs",
+      "contentHash": "edcc66f2f4c72d6b249c9639333a139bdb00b1610b561b3a01c884b4a3459a4d",
+      "functions": [
+        {
+          "name": "GetMigrationJobsHandler",
+          "params": [
+            "repository"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "Handle",
+          "params": [
+            "request",
+            "cancellationToken"
+          ],
+          "returnType": "Task<IReadOnlyList<MigrationJobDto>>",
+          "exported": true,
+          "lineCount": 22
+        }
+      ],
+      "classes": [
+        {
+          "name": "GetMigrationJobsHandler",
+          "methods": [
+            "GetMigrationJobsHandler",
+            "Handle"
+          ],
+          "properties": [
+            "_repository"
+          ],
+          "exported": true,
+          "lineCount": 32
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Application.ProjectMappings.DTOs",
+          "specifiers": [
+            "DTOs"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.ProjectMappings.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.ProjectMappings.Queries",
+          "specifiers": [
+            "Queries"
+          ]
+        },
+        {
+          "source": "MediatR",
+          "specifiers": [
+            "MediatR"
+          ]
+        }
+      ],
+      "exports": [
+        "GetMigrationJobsHandler",
+        "Handle",
+        "GetMigrationJobsHandler"
+      ],
+      "totalLines": 43,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/ProjectMappings/Handlers/GetProjectMappingsHandler.cs": {
+      "filePath": "src/backend/CloudShift.Application/ProjectMappings/Handlers/GetProjectMappingsHandler.cs",
+      "contentHash": "aab403c70b5edbf7c39e91a113f31d96941d773ebe4ee4eff93312a3250231e9",
+      "functions": [
+        {
+          "name": "GetProjectMappingsHandler",
+          "params": [
+            "repository"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "Handle",
+          "params": [
+            "request",
+            "cancellationToken"
+          ],
+          "returnType": "Task<IReadOnlyList<ProjectMappingDto>>",
+          "exported": true,
+          "lineCount": 11
+        }
+      ],
+      "classes": [
+        {
+          "name": "GetProjectMappingsHandler",
+          "methods": [
+            "GetProjectMappingsHandler",
+            "Handle"
+          ],
+          "properties": [
+            "_repository"
+          ],
+          "exported": true,
+          "lineCount": 21
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Application.ProjectMappings.DTOs",
+          "specifiers": [
+            "DTOs"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.ProjectMappings.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.ProjectMappings.Queries",
+          "specifiers": [
+            "Queries"
+          ]
+        },
+        {
+          "source": "MediatR",
+          "specifiers": [
+            "MediatR"
+          ]
+        }
+      ],
+      "exports": [
+        "GetProjectMappingsHandler",
+        "Handle",
+        "GetProjectMappingsHandler"
+      ],
+      "totalLines": 33,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/ProjectMappings/Handlers/StartMigrationJobHandler.cs": {
+      "filePath": "src/backend/CloudShift.Application/ProjectMappings/Handlers/StartMigrationJobHandler.cs",
+      "contentHash": "59de3839671dee051656008c2fcafac31bc55d12c03b03002968d7f2600e24ce",
+      "functions": [
+        {
+          "name": "StartMigrationJobHandler",
+          "params": [
+            "mappingRepository",
+            "jobRepository",
+            "eventPublisher"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "Handle",
+          "params": [
+            "command",
+            "cancellationToken"
+          ],
+          "returnType": "Task<MigrationJobDto>",
+          "exported": true,
+          "lineCount": 46
+        }
+      ],
+      "classes": [
+        {
+          "name": "StartMigrationJobHandler",
+          "methods": [
+            "StartMigrationJobHandler",
+            "Handle"
+          ],
+          "properties": [
+            "_mappingRepository",
+            "_jobRepository",
+            "_eventPublisher"
+          ],
+          "exported": true,
+          "lineCount": 63
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Application.Common.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.ProjectMappings.Commands",
+          "specifiers": [
+            "Commands"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.ProjectMappings.DTOs",
+          "specifiers": [
+            "DTOs"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.ProjectMappings.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Entities",
+          "specifiers": [
+            "Entities"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Messages",
+          "specifiers": [
+            "Messages"
+          ]
+        },
+        {
+          "source": "MediatR",
+          "specifiers": [
+            "MediatR"
+          ]
+        }
+      ],
+      "exports": [
+        "StartMigrationJobHandler",
+        "Handle",
+        "StartMigrationJobHandler"
+      ],
+      "totalLines": 82,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/ProjectMappings/Interfaces/IMigrationJobRepository.cs": {
+      "filePath": "src/backend/CloudShift.Application/ProjectMappings/Interfaces/IMigrationJobRepository.cs",
+      "contentHash": "db13db375e0b3810d294775995a73f2a1c251d81884c4dad4cb7bcaf84f71eb1",
+      "functions": [],
+      "classes": [
+        {
+          "name": "IMigrationJobRepository",
+          "methods": [
+            "AddAsync",
+            "GetByIdAsync",
+            "GetByUserIdAsync"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 11
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Domain.Entities",
+          "specifiers": [
+            "Entities"
+          ]
+        }
+      ],
+      "exports": [
+        "IMigrationJobRepository"
+      ],
+      "totalLines": 19,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/ProjectMappings/Interfaces/IProjectMappingRepository.cs": {
+      "filePath": "src/backend/CloudShift.Application/ProjectMappings/Interfaces/IProjectMappingRepository.cs",
+      "contentHash": "cde6f1f651e012a2e3b2dd1e59f08b3092cf1d7445c1fc5f43f0e696fad917a2",
+      "functions": [],
+      "classes": [
+        {
+          "name": "IProjectMappingRepository",
+          "methods": [
+            "AddAsync",
+            "GetByUserIdAsync",
+            "GetByIdAsync"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 14
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Domain.Entities",
+          "specifiers": [
+            "Entities"
+          ]
+        }
+      ],
+      "exports": [
+        "IProjectMappingRepository"
+      ],
+      "totalLines": 23,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/ProjectMappings/Models/FilterConfig.cs": {
+      "filePath": "src/backend/CloudShift.Application/ProjectMappings/Models/FilterConfig.cs",
+      "contentHash": "928361b5b5330154bc18b87a5a56dbd3c6b4f5c41ab3344d3cc268ae97a2b587",
+      "functions": [],
+      "classes": [
+        {
+          "name": "FilterConfig",
+          "methods": [],
+          "properties": [
+            "IncludeExtensions",
+            "ExcludeExtensions",
+            "MaxSizeMB",
+            "MinSizeMB",
+            "ModifiedAfter",
+            "ModifiedBefore",
+            "IncludeNamePatterns"
+          ],
+          "exported": true,
+          "lineCount": 32
+        }
+      ],
+      "imports": [],
+      "exports": [
+        "IncludeExtensions",
+        "ExcludeExtensions",
+        "MaxSizeMB",
+        "MinSizeMB",
+        "ModifiedAfter",
+        "ModifiedBefore",
+        "IncludeNamePatterns",
+        "FilterConfig"
+      ],
+      "totalLines": 40,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/ProjectMappings/Queries/GetMigrationJobsQuery.cs": {
+      "filePath": "src/backend/CloudShift.Application/ProjectMappings/Queries/GetMigrationJobsQuery.cs",
+      "contentHash": "cf5b1893250c0690948ca873baa5bebeebf7326c5a57dfb1f7218e3be22d94a3",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "CloudShift.Application.ProjectMappings.DTOs",
+          "specifiers": [
+            "DTOs"
+          ]
+        },
+        {
+          "source": "MediatR",
+          "specifiers": [
+            "MediatR"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 10,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Application/ProjectMappings/Queries/GetProjectMappingsQuery.cs": {
+      "filePath": "src/backend/CloudShift.Application/ProjectMappings/Queries/GetProjectMappingsQuery.cs",
+      "contentHash": "bb0d691fd723f1156f19fa9c8bc29407c8d1d8c0c8be1749aad1ff4613c8c014",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "CloudShift.Application.ProjectMappings.DTOs",
+          "specifiers": [
+            "DTOs"
+          ]
+        },
+        {
+          "source": "MediatR",
+          "specifiers": [
+            "MediatR"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 10,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Domain/Class1.cs": {
+      "filePath": "src/backend/CloudShift.Domain/Class1.cs",
+      "contentHash": "fa5aa52d626f78b28ccc0d234a5e81388cc938ec155b1638fc1caae160169210",
+      "functions": [],
+      "classes": [
+        {
+          "name": "Class1",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "imports": [],
+      "exports": [
+        "Class1"
+      ],
+      "totalLines": 7,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Domain/CloudShift.Domain.csproj": {
+      "filePath": "src/backend/CloudShift.Domain/CloudShift.Domain.csproj",
+      "contentHash": "e151f959964eb450a5b86b72765e3f9c505645fa9516eae485743d2b43911c8e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 10,
+      "hasStructuralAnalysis": false
+    },
+    "src/backend/CloudShift.Domain/Entities/AppProfile.cs": {
+      "filePath": "src/backend/CloudShift.Domain/Entities/AppProfile.cs",
+      "contentHash": "4ddcd7fc1de32bb0f72ed3c9149738eac98851d5fb55642a9d45f4bfee98981d",
+      "functions": [],
+      "classes": [
+        {
+          "name": "AppProfile",
+          "methods": [],
+          "properties": [
+            "Id",
+            "UserId",
+            "Provider",
+            "Email",
+            "AccessToken",
+            "RefreshToken",
+            "ExpiresAt",
+            "CreatedAt",
+            "User"
+          ],
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "imports": [
+        {
+          "source": "System",
+          "specifiers": [
+            "System"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Enums",
+          "specifiers": [
+            "Enums"
+          ]
+        }
+      ],
+      "exports": [
+        "Id",
+        "UserId",
+        "Provider",
+        "Email",
+        "AccessToken",
+        "RefreshToken",
+        "ExpiresAt",
+        "CreatedAt",
+        "User",
+        "AppProfile"
+      ],
+      "totalLines": 19,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Domain/Entities/FileTransferLog.cs": {
+      "filePath": "src/backend/CloudShift.Domain/Entities/FileTransferLog.cs",
+      "contentHash": "3cdffc7445ff6d3ffb65fbf55302f8a6bf9afee59e393f4cd198313fc60ea52c",
+      "functions": [],
+      "classes": [
+        {
+          "name": "FileTransferLog",
+          "methods": [],
+          "properties": [
+            "Id",
+            "MigrationJobId",
+            "FileName",
+            "SourceFileId",
+            "Size",
+            "Status",
+            "ErrorMessage",
+            "TransferredAt",
+            "MigrationJob"
+          ],
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "imports": [
+        {
+          "source": "System",
+          "specifiers": [
+            "System"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Enums",
+          "specifiers": [
+            "Enums"
+          ]
+        }
+      ],
+      "exports": [
+        "Id",
+        "MigrationJobId",
+        "FileName",
+        "SourceFileId",
+        "Size",
+        "Status",
+        "ErrorMessage",
+        "TransferredAt",
+        "MigrationJob",
+        "FileTransferLog"
+      ],
+      "totalLines": 19,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Domain/Entities/MigrationJob.cs": {
+      "filePath": "src/backend/CloudShift.Domain/Entities/MigrationJob.cs",
+      "contentHash": "5101854f6f39b1cbbe6594f15d74537b8c15e9a9fd69f331ee6c1a088af1e27a",
+      "functions": [],
+      "classes": [
+        {
+          "name": "MigrationJob",
+          "methods": [],
+          "properties": [
+            "Id",
+            "ProjectMappingId",
+            "Status",
+            "JobType",
+            "TotalItems",
+            "ProcessedItems",
+            "StartedAt",
+            "CompletedAt",
+            "CreatedAt",
+            "ProjectMapping",
+            "FileTransferLogs"
+          ],
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "imports": [
+        {
+          "source": "System",
+          "specifiers": [
+            "System"
+          ]
+        },
+        {
+          "source": "System.Collections.Generic",
+          "specifiers": [
+            "Generic"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Enums",
+          "specifiers": [
+            "Enums"
+          ]
+        }
+      ],
+      "exports": [
+        "Id",
+        "ProjectMappingId",
+        "Status",
+        "JobType",
+        "TotalItems",
+        "ProcessedItems",
+        "StartedAt",
+        "CompletedAt",
+        "CreatedAt",
+        "ProjectMapping",
+        "FileTransferLogs",
+        "MigrationJob"
+      ],
+      "totalLines": 22,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Domain/Entities/ProjectMapping.cs": {
+      "filePath": "src/backend/CloudShift.Domain/Entities/ProjectMapping.cs",
+      "contentHash": "8527e48d457b7164d55ba5b7d4874e05c5c4475780c6dd6155dd2926f57b0a5b",
+      "functions": [],
+      "classes": [
+        {
+          "name": "ProjectMapping",
+          "methods": [],
+          "properties": [
+            "Id",
+            "UserId",
+            "SourceProfileId",
+            "DestProfileId",
+            "Name",
+            "SourcePath",
+            "DestPath",
+            "FilterConfigJson",
+            "ConflictResolutionRule",
+            "CreatedAt",
+            "UpdatedAt",
+            "User",
+            "SourceProfile",
+            "DestProfile",
+            "MigrationJobs"
+          ],
+          "exported": true,
+          "lineCount": 34
+        }
+      ],
+      "imports": [
+        {
+          "source": "System",
+          "specifiers": [
+            "System"
+          ]
+        },
+        {
+          "source": "System.Collections.Generic",
+          "specifiers": [
+            "Generic"
+          ]
+        }
+      ],
+      "exports": [
+        "Id",
+        "UserId",
+        "SourceProfileId",
+        "DestProfileId",
+        "Name",
+        "SourcePath",
+        "DestPath",
+        "FilterConfigJson",
+        "ConflictResolutionRule",
+        "CreatedAt",
+        "UpdatedAt",
+        "User",
+        "SourceProfile",
+        "DestProfile",
+        "MigrationJobs",
+        "ProjectMapping"
+      ],
+      "totalLines": 40,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Domain/Entities/User.cs": {
+      "filePath": "src/backend/CloudShift.Domain/Entities/User.cs",
+      "contentHash": "072773077a74bfb37f67e6ba91727434e8a5e5ae29bcae601119751e9cbc6d36",
+      "functions": [],
+      "classes": [
+        {
+          "name": "User",
+          "methods": [],
+          "properties": [
+            "Id",
+            "Email",
+            "FirstName",
+            "LastName",
+            "CreatedAt",
+            "AppProfiles",
+            "ProjectMappings"
+          ],
+          "exported": true,
+          "lineCount": 11
+        }
+      ],
+      "imports": [
+        {
+          "source": "System",
+          "specifiers": [
+            "System"
+          ]
+        },
+        {
+          "source": "System.Collections.Generic",
+          "specifiers": [
+            "Generic"
+          ]
+        }
+      ],
+      "exports": [
+        "Id",
+        "Email",
+        "FirstName",
+        "LastName",
+        "CreatedAt",
+        "AppProfiles",
+        "ProjectMappings",
+        "User"
+      ],
+      "totalLines": 17,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Domain/Enums/FileTransferStatus.cs": {
+      "filePath": "src/backend/CloudShift.Domain/Enums/FileTransferStatus.cs",
+      "contentHash": "001209079ac1c1e9880c0757aab3481ba696499e5099e33bcbe171d41c11ef2e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 10,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Domain/Enums/JobStatus.cs": {
+      "filePath": "src/backend/CloudShift.Domain/Enums/JobStatus.cs",
+      "contentHash": "8ad0eed03227a75dc90dbdbe11bc402182c91517be0b2f39d5de6c5d71d5b29b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 11,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Domain/Enums/JobType.cs": {
+      "filePath": "src/backend/CloudShift.Domain/Enums/JobType.cs",
+      "contentHash": "55c13a659f8b81221c0b37d7afc690f7e4d057bb444d384446937d2b0de5b5fe",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 8,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Domain/Enums/ProviderType.cs": {
+      "filePath": "src/backend/CloudShift.Domain/Enums/ProviderType.cs",
+      "contentHash": "945b8fa22ac89a8e1f12b68e210ef4ed8d10c8d97b45ecb8e913b59f161a6349",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 8,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Domain/Messages/MigrationJobStartedEvent.cs": {
+      "filePath": "src/backend/CloudShift.Domain/Messages/MigrationJobStartedEvent.cs",
+      "contentHash": "58f9bdf71256ccbc5fed55c7c11f03ac5cdd8f8f7cf7b42de4ad0328adf17a93",
+      "functions": [],
+      "classes": [
+        {
+          "name": "MigrationJobStartedEvent",
+          "methods": [],
+          "properties": [
+            "JobId",
+            "MappingId",
+            "JobType",
+            "EnqueuedAt"
+          ],
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "imports": [
+        {
+          "source": "System",
+          "specifiers": [
+            "System"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Enums",
+          "specifiers": [
+            "Enums"
+          ]
+        }
+      ],
+      "exports": [
+        "JobId",
+        "MappingId",
+        "JobType",
+        "EnqueuedAt",
+        "MigrationJobStartedEvent"
+      ],
+      "totalLines": 17,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Infrastructure/Class1.cs": {
+      "filePath": "src/backend/CloudShift.Infrastructure/Class1.cs",
+      "contentHash": "60d943faa775a80b62996e4a8a1b593ad6aee6a95b03f396a6356de97cd2380e",
+      "functions": [],
+      "classes": [
+        {
+          "name": "Class1",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "imports": [],
+      "exports": [
+        "Class1"
+      ],
+      "totalLines": 7,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Infrastructure/CloudShift.Infrastructure.csproj": {
+      "filePath": "src/backend/CloudShift.Infrastructure/CloudShift.Infrastructure.csproj",
+      "contentHash": "537293c238ce783770a629cae6f34dfe49776fe6411dc172a710b44f7bf3fe73",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 20,
+      "hasStructuralAnalysis": false
+    },
+    "src/backend/CloudShift.Infrastructure/Data/ApplicationDbContext.cs": {
+      "filePath": "src/backend/CloudShift.Infrastructure/Data/ApplicationDbContext.cs",
+      "contentHash": "1e36df0c7eb345f964b8d68e900062a878df9561b0413f9d1f3f4e76645eff76",
+      "functions": [
+        {
+          "name": "ApplicationDbContext",
+          "params": [
+            "options"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "OnModelCreating",
+          "params": [
+            "modelBuilder"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 58
+        }
+      ],
+      "classes": [
+        {
+          "name": "ApplicationDbContext",
+          "methods": [
+            "ApplicationDbContext",
+            "OnModelCreating"
+          ],
+          "properties": [
+            "Users",
+            "AppProfiles",
+            "ProjectMappings",
+            "MigrationJobs",
+            "FileTransferLogs"
+          ],
+          "exported": true,
+          "lineCount": 71
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Domain.Entities",
+          "specifiers": [
+            "Entities"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore",
+          "specifiers": [
+            "EntityFrameworkCore"
+          ]
+        }
+      ],
+      "exports": [
+        "ApplicationDbContext",
+        "Users",
+        "AppProfiles",
+        "ProjectMappings",
+        "MigrationJobs",
+        "FileTransferLogs",
+        "ApplicationDbContext"
+      ],
+      "totalLines": 78,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Infrastructure/DependencyInjection.cs": {
+      "filePath": "src/backend/CloudShift.Infrastructure/DependencyInjection.cs",
+      "contentHash": "e1656713b69c2d90e92d282780f32903c4e97050e4d23769ca7f3960c88ead75",
+      "functions": [
+        {
+          "name": "AddInfrastructureServices",
+          "params": [
+            "services",
+            "configuration"
+          ],
+          "returnType": "IServiceCollection",
+          "exported": true,
+          "lineCount": 15
+        }
+      ],
+      "classes": [
+        {
+          "name": "DependencyInjection",
+          "methods": [
+            "AddInfrastructureServices"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 18
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Application.AppProfiles.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.Common.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.ProjectMappings.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        },
+        {
+          "source": "CloudShift.Infrastructure.Messaging",
+          "specifiers": [
+            "Messaging"
+          ]
+        },
+        {
+          "source": "CloudShift.Infrastructure.Data",
+          "specifiers": [
+            "Data"
+          ]
+        },
+        {
+          "source": "CloudShift.Infrastructure.Repositories",
+          "specifiers": [
+            "Repositories"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore",
+          "specifiers": [
+            "EntityFrameworkCore"
+          ]
+        },
+        {
+          "source": "Microsoft.Extensions.Configuration",
+          "specifiers": [
+            "Configuration"
+          ]
+        },
+        {
+          "source": "Microsoft.Extensions.DependencyInjection",
+          "specifiers": [
+            "DependencyInjection"
+          ]
+        }
+      ],
+      "exports": [
+        "AddInfrastructureServices",
+        "DependencyInjection"
+      ],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Infrastructure/Messaging/MassTransitEventPublisher.cs": {
+      "filePath": "src/backend/CloudShift.Infrastructure/Messaging/MassTransitEventPublisher.cs",
+      "contentHash": "e0e465b6a2d114134c1db2f2ddb3c0f39a2aaae5b46f37152a65e544a79c3ab3",
+      "functions": [
+        {
+          "name": "MassTransitEventPublisher",
+          "params": [
+            "publishEndpoint"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "PublishAsync",
+          "params": [
+            "@event",
+            "cancellationToken"
+          ],
+          "returnType": "Task",
+          "exported": true,
+          "lineCount": 2
+        }
+      ],
+      "classes": [
+        {
+          "name": "MassTransitEventPublisher",
+          "methods": [
+            "MassTransitEventPublisher",
+            "PublishAsync"
+          ],
+          "properties": [
+            "_publishEndpoint"
+          ],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Application.Common.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Messages",
+          "specifiers": [
+            "Messages"
+          ]
+        },
+        {
+          "source": "MassTransit",
+          "specifiers": [
+            "MassTransit"
+          ]
+        }
+      ],
+      "exports": [
+        "MassTransitEventPublisher",
+        "PublishAsync",
+        "MassTransitEventPublisher"
+      ],
+      "totalLines": 24,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Infrastructure/Migrations/20260511150257_InitialCreate.cs": {
+      "filePath": "src/backend/CloudShift.Infrastructure/Migrations/20260511150257_InitialCreate.cs",
+      "contentHash": "1116d5b7b4a60f09a00f8d9028cb280298353efbc5a9d64b2e579ef38f363196",
+      "functions": [
+        {
+          "name": "Up",
+          "params": [
+            "migrationBuilder"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 154
+        },
+        {
+          "name": "Down",
+          "params": [
+            "migrationBuilder"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 17
+        }
+      ],
+      "classes": [
+        {
+          "name": "InitialCreate",
+          "methods": [
+            "Up",
+            "Down"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 177
+        }
+      ],
+      "imports": [
+        {
+          "source": "System",
+          "specifiers": [
+            "System"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore.Migrations",
+          "specifiers": [
+            "Migrations"
+          ]
+        }
+      ],
+      "exports": [
+        "InitialCreate"
+      ],
+      "totalLines": 187,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Infrastructure/Migrations/20260511150257_InitialCreate.Designer.cs": {
+      "filePath": "src/backend/CloudShift.Infrastructure/Migrations/20260511150257_InitialCreate.Designer.cs",
+      "contentHash": "3aea8187f0730a36e8dafad14bb671ffb6022e75fbe8c4b652e3a22f30fef4c8",
+      "functions": [
+        {
+          "name": "BuildTargetModel",
+          "params": [
+            "modelBuilder"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 263
+        }
+      ],
+      "classes": [
+        {
+          "name": "InitialCreate",
+          "methods": [
+            "BuildTargetModel"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 269
+        }
+      ],
+      "imports": [
+        {
+          "source": "System",
+          "specifiers": [
+            "System"
+          ]
+        },
+        {
+          "source": "CloudShift.Infrastructure.Data",
+          "specifiers": [
+            "Data"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore",
+          "specifiers": [
+            "EntityFrameworkCore"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore.Infrastructure",
+          "specifiers": [
+            "Infrastructure"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore.Metadata",
+          "specifiers": [
+            "Metadata"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore.Migrations",
+          "specifiers": [
+            "Migrations"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore.Storage.ValueConversion",
+          "specifiers": [
+            "ValueConversion"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 284,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Infrastructure/Migrations/20260524133710_AddProjectMappingModule.cs": {
+      "filePath": "src/backend/CloudShift.Infrastructure/Migrations/20260524133710_AddProjectMappingModule.cs",
+      "contentHash": "725948021c6fb47b3c7ec60de1e3519b8a96fe5c4d2470bcd9f3f130f757cf59",
+      "functions": [
+        {
+          "name": "Up",
+          "params": [
+            "migrationBuilder"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 42
+        },
+        {
+          "name": "Down",
+          "params": [
+            "migrationBuilder"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 32
+        }
+      ],
+      "classes": [
+        {
+          "name": "AddProjectMappingModule",
+          "methods": [
+            "Up",
+            "Down"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 80
+        }
+      ],
+      "imports": [
+        {
+          "source": "Microsoft.EntityFrameworkCore.Migrations",
+          "specifiers": [
+            "Migrations"
+          ]
+        }
+      ],
+      "exports": [
+        "AddProjectMappingModule"
+      ],
+      "totalLines": 89,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Infrastructure/Migrations/20260524133710_AddProjectMappingModule.Designer.cs": {
+      "filePath": "src/backend/CloudShift.Infrastructure/Migrations/20260524133710_AddProjectMappingModule.Designer.cs",
+      "contentHash": "cca9ee88195c3d28044a4198fe714dfdf0bcebecb7a07046fbf0f98f5ece7b68",
+      "functions": [
+        {
+          "name": "BuildTargetModel",
+          "params": [
+            "modelBuilder"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 280
+        }
+      ],
+      "classes": [
+        {
+          "name": "AddProjectMappingModule",
+          "methods": [
+            "BuildTargetModel"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 286
+        }
+      ],
+      "imports": [
+        {
+          "source": "System",
+          "specifiers": [
+            "System"
+          ]
+        },
+        {
+          "source": "CloudShift.Infrastructure.Data",
+          "specifiers": [
+            "Data"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore",
+          "specifiers": [
+            "EntityFrameworkCore"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore.Infrastructure",
+          "specifiers": [
+            "Infrastructure"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore.Metadata",
+          "specifiers": [
+            "Metadata"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore.Migrations",
+          "specifiers": [
+            "Migrations"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore.Storage.ValueConversion",
+          "specifiers": [
+            "ValueConversion"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 301,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Infrastructure/Migrations/ApplicationDbContextModelSnapshot.cs": {
+      "filePath": "src/backend/CloudShift.Infrastructure/Migrations/ApplicationDbContextModelSnapshot.cs",
+      "contentHash": "a48f95f2531c90c198cb5e7235b009076a09739c560cb9857ea0dc7dbbfb4e51",
+      "functions": [
+        {
+          "name": "BuildModel",
+          "params": [
+            "modelBuilder"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 280
+        }
+      ],
+      "classes": [
+        {
+          "name": "ApplicationDbContextModelSnapshot",
+          "methods": [
+            "BuildModel"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 284
+        }
+      ],
+      "imports": [
+        {
+          "source": "System",
+          "specifiers": [
+            "System"
+          ]
+        },
+        {
+          "source": "CloudShift.Infrastructure.Data",
+          "specifiers": [
+            "Data"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore",
+          "specifiers": [
+            "EntityFrameworkCore"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore.Infrastructure",
+          "specifiers": [
+            "Infrastructure"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore.Metadata",
+          "specifiers": [
+            "Metadata"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore.Storage.ValueConversion",
+          "specifiers": [
+            "ValueConversion"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 298,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Infrastructure/Repositories/AppProfileRepository.cs": {
+      "filePath": "src/backend/CloudShift.Infrastructure/Repositories/AppProfileRepository.cs",
+      "contentHash": "273e8573b8ae85e4a260e03ed5f26eb7ccd88a21a72543431eb45f1ef6fbf02f",
+      "functions": [
+        {
+          "name": "AppProfileRepository",
+          "params": [
+            "context"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "AddAsync",
+          "params": [
+            "profile",
+            "cancellationToken"
+          ],
+          "returnType": "Task<AppProfile>",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "GetByUserIdAsync",
+          "params": [
+            "userId",
+            "cancellationToken"
+          ],
+          "returnType": "Task<IReadOnlyList<AppProfile>>",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "GetByIdAsync",
+          "params": [
+            "id",
+            "cancellationToken"
+          ],
+          "returnType": "Task<AppProfile?>",
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "classes": [
+        {
+          "name": "AppProfileRepository",
+          "methods": [
+            "AppProfileRepository",
+            "AddAsync",
+            "GetByUserIdAsync",
+            "GetByIdAsync"
+          ],
+          "properties": [
+            "_context"
+          ],
+          "exported": true,
+          "lineCount": 32
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Application.AppProfiles.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Entities",
+          "specifiers": [
+            "Entities"
+          ]
+        },
+        {
+          "source": "CloudShift.Infrastructure.Data",
+          "specifiers": [
+            "Data"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore",
+          "specifiers": [
+            "EntityFrameworkCore"
+          ]
+        }
+      ],
+      "exports": [
+        "AppProfileRepository",
+        "AddAsync",
+        "GetByUserIdAsync",
+        "GetByIdAsync",
+        "AppProfileRepository"
+      ],
+      "totalLines": 44,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Infrastructure/Repositories/MigrationJobRepository.cs": {
+      "filePath": "src/backend/CloudShift.Infrastructure/Repositories/MigrationJobRepository.cs",
+      "contentHash": "c8493bc8cf6709db6cde067b6df23e38da324b6efa06ff8715e8e058d641d7a6",
+      "functions": [
+        {
+          "name": "MigrationJobRepository",
+          "params": [
+            "context"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "AddAsync",
+          "params": [
+            "job",
+            "cancellationToken"
+          ],
+          "returnType": "Task<MigrationJob>",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "GetByIdAsync",
+          "params": [
+            "id",
+            "cancellationToken"
+          ],
+          "returnType": "Task<MigrationJob?>",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "GetByUserIdAsync",
+          "params": [
+            "userId",
+            "cancellationToken"
+          ],
+          "returnType": "Task<IReadOnlyList<MigrationJob>>",
+          "exported": true,
+          "lineCount": 11
+        }
+      ],
+      "classes": [
+        {
+          "name": "MigrationJobRepository",
+          "methods": [
+            "MigrationJobRepository",
+            "AddAsync",
+            "GetByIdAsync",
+            "GetByUserIdAsync"
+          ],
+          "properties": [
+            "_context"
+          ],
+          "exported": true,
+          "lineCount": 39
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Application.ProjectMappings.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Entities",
+          "specifiers": [
+            "Entities"
+          ]
+        },
+        {
+          "source": "CloudShift.Infrastructure.Data",
+          "specifiers": [
+            "Data"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore",
+          "specifiers": [
+            "EntityFrameworkCore"
+          ]
+        }
+      ],
+      "exports": [
+        "MigrationJobRepository",
+        "AddAsync",
+        "GetByIdAsync",
+        "GetByUserIdAsync",
+        "MigrationJobRepository"
+      ],
+      "totalLines": 50,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Infrastructure/Repositories/ProjectMappingRepository.cs": {
+      "filePath": "src/backend/CloudShift.Infrastructure/Repositories/ProjectMappingRepository.cs",
+      "contentHash": "f1d140892c14a5ea5848ee7edf05954c5090ad29576f49ed2b9cf771b574fc38",
+      "functions": [
+        {
+          "name": "ProjectMappingRepository",
+          "params": [
+            "context"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "AddAsync",
+          "params": [
+            "mapping",
+            "cancellationToken"
+          ],
+          "returnType": "Task<ProjectMapping>",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "GetByUserIdAsync",
+          "params": [
+            "userId",
+            "cancellationToken"
+          ],
+          "returnType": "Task<IReadOnlyList<ProjectMapping>>",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "GetByIdAsync",
+          "params": [
+            "id",
+            "cancellationToken"
+          ],
+          "returnType": "Task<ProjectMapping?>",
+          "exported": true,
+          "lineCount": 11
+        }
+      ],
+      "classes": [
+        {
+          "name": "ProjectMappingRepository",
+          "methods": [
+            "ProjectMappingRepository",
+            "AddAsync",
+            "GetByUserIdAsync",
+            "GetByIdAsync"
+          ],
+          "properties": [
+            "_context"
+          ],
+          "exported": true,
+          "lineCount": 43
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Application.ProjectMappings.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Entities",
+          "specifiers": [
+            "Entities"
+          ]
+        },
+        {
+          "source": "CloudShift.Infrastructure.Data",
+          "specifiers": [
+            "Data"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore",
+          "specifiers": [
+            "EntityFrameworkCore"
+          ]
+        }
+      ],
+      "exports": [
+        "ProjectMappingRepository",
+        "AddAsync",
+        "GetByUserIdAsync",
+        "GetByIdAsync",
+        "ProjectMappingRepository"
+      ],
+      "totalLines": 54,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Worker/appsettings.Development.json": {
+      "filePath": "src/backend/CloudShift.Worker/appsettings.Development.json",
+      "contentHash": "488100e12e239ae7899d4ffbc15e382b67f2151841292050d1fd7434615a33b9",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 12,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Worker/appsettings.json": {
+      "filePath": "src/backend/CloudShift.Worker/appsettings.json",
+      "contentHash": "488100e12e239ae7899d4ffbc15e382b67f2151841292050d1fd7434615a33b9",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 12,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Worker/CloudShift.Worker.csproj": {
+      "filePath": "src/backend/CloudShift.Worker/CloudShift.Worker.csproj",
+      "contentHash": "c15f95b02a980a783abb9f140d4960c02f84f95a8b321abc1d54f6742da5e92a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 21,
+      "hasStructuralAnalysis": false
+    },
+    "src/backend/CloudShift.Worker/Consumers/MigrationJobConsumer.cs": {
+      "filePath": "src/backend/CloudShift.Worker/Consumers/MigrationJobConsumer.cs",
+      "contentHash": "7096a6c8502440b1ad99505a6148724a39497501adfba28577dc9558d40d9a79",
+      "functions": [
+        {
+          "name": "MigrationJobConsumer",
+          "params": [
+            "dbContext",
+            "cloudStorageProvider",
+            "logger"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "Consume",
+          "params": [
+            "context"
+          ],
+          "returnType": "Task",
+          "exported": true,
+          "lineCount": 107
+        },
+        {
+          "name": "CreateHttpRetryPolicy",
+          "params": [
+            "jobId"
+          ],
+          "returnType": "IAsyncPolicy",
+          "exported": false,
+          "lineCount": 17
+        },
+        {
+          "name": "IsTransientCloudHttpError",
+          "params": [
+            "exception"
+          ],
+          "returnType": "bool",
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "GetFullJobFilePlanAsync",
+          "params": [
+            "mapping",
+            "cancellationToken"
+          ],
+          "returnType": "Task<IReadOnlyList<PlannedTransferFile>>",
+          "exported": false,
+          "lineCount": 20
+        },
+        {
+          "name": "OpenSourceStreamAsync",
+          "params": [
+            "file",
+            "cancellationToken"
+          ],
+          "returnType": "Task<Stream>",
+          "exported": false,
+          "lineCount": 11
+        }
+      ],
+      "classes": [
+        {
+          "name": "MigrationJobConsumer",
+          "methods": [
+            "MigrationJobConsumer",
+            "Consume",
+            "CreateHttpRetryPolicy",
+            "IsTransientCloudHttpError",
+            "GetFullJobFilePlanAsync",
+            "OpenSourceStreamAsync"
+          ],
+          "properties": [
+            "_dbContext",
+            "_cloudStorageProvider",
+            "_logger"
+          ],
+          "exported": true,
+          "lineCount": 187
+        }
+      ],
+      "imports": [
+        {
+          "source": "System",
+          "specifiers": [
+            "System"
+          ]
+        },
+        {
+          "source": "System.Net",
+          "specifiers": [
+            "Net"
+          ]
+        },
+        {
+          "source": "System.Net.Http",
+          "specifiers": [
+            "Http"
+          ]
+        },
+        {
+          "source": "System.Threading",
+          "specifiers": [
+            "Threading"
+          ]
+        },
+        {
+          "source": "System.Threading.Tasks",
+          "specifiers": [
+            "Tasks"
+          ]
+        },
+        {
+          "source": "CloudShift.Application.Common.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Entities",
+          "specifiers": [
+            "Entities"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Enums",
+          "specifiers": [
+            "Enums"
+          ]
+        },
+        {
+          "source": "CloudShift.Domain.Messages",
+          "specifiers": [
+            "Messages"
+          ]
+        },
+        {
+          "source": "CloudShift.Infrastructure.Data",
+          "specifiers": [
+            "Data"
+          ]
+        },
+        {
+          "source": "MassTransit",
+          "specifiers": [
+            "MassTransit"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore",
+          "specifiers": [
+            "EntityFrameworkCore"
+          ]
+        },
+        {
+          "source": "Microsoft.Extensions.Logging",
+          "specifiers": [
+            "Logging"
+          ]
+        },
+        {
+          "source": "Polly",
+          "specifiers": [
+            "Polly"
+          ]
+        }
+      ],
+      "exports": [
+        "MigrationJobConsumer",
+        "Consume",
+        "MigrationJobConsumer"
+      ],
+      "totalLines": 205,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Worker/Program.cs": {
+      "filePath": "src/backend/CloudShift.Worker/Program.cs",
+      "contentHash": "feda505f7be8849ac2741756191d73a1f6f96e32115b5a61c0cfbe9b4e2f5022",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "CloudShift.Application.Common.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        },
+        {
+          "source": "CloudShift.Infrastructure.Data",
+          "specifiers": [
+            "Data"
+          ]
+        },
+        {
+          "source": "CloudShift.Worker",
+          "specifiers": [
+            "Worker"
+          ]
+        },
+        {
+          "source": "CloudShift.Worker.Consumers",
+          "specifiers": [
+            "Consumers"
+          ]
+        },
+        {
+          "source": "CloudShift.Worker.Storage",
+          "specifiers": [
+            "Storage"
+          ]
+        },
+        {
+          "source": "MassTransit",
+          "specifiers": [
+            "MassTransit"
+          ]
+        },
+        {
+          "source": "Microsoft.EntityFrameworkCore",
+          "specifiers": [
+            "EntityFrameworkCore"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 36,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Worker/Properties/launchSettings.json": {
+      "filePath": "src/backend/CloudShift.Worker/Properties/launchSettings.json",
+      "contentHash": "b57bb01052bd88cb8575235bdd0cf6d77c9145d5383cd51e0dd8238e64d450ad",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 13,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Worker/Storage/NoopCloudStorageProvider.cs": {
+      "filePath": "src/backend/CloudShift.Worker/Storage/NoopCloudStorageProvider.cs",
+      "contentHash": "f71cafcc9486c829cb73d81fc61f22d78e7746e5aa6547867be020b280de600b",
+      "functions": [
+        {
+          "name": "TransferFileAsync",
+          "params": [
+            "sourcePath",
+            "destPath",
+            "stream",
+            "cancellationToken"
+          ],
+          "returnType": "Task",
+          "exported": true,
+          "lineCount": 11
+        }
+      ],
+      "classes": [
+        {
+          "name": "NoopCloudStorageProvider",
+          "methods": [
+            "TransferFileAsync"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 14
+        }
+      ],
+      "imports": [
+        {
+          "source": "CloudShift.Application.Common.Interfaces",
+          "specifiers": [
+            "Interfaces"
+          ]
+        }
+      ],
+      "exports": [
+        "TransferFileAsync",
+        "NoopCloudStorageProvider"
+      ],
+      "totalLines": 19,
+      "hasStructuralAnalysis": true
+    },
+    "src/backend/CloudShift.Worker/Worker.cs": {
+      "filePath": "src/backend/CloudShift.Worker/Worker.cs",
+      "contentHash": "e09fc0e11acc1d2c219c02d92a4226f7fc13b7bdba3c4828eb6191c3f1ee2b64",
+      "functions": [
+        {
+          "name": "Worker",
+          "params": [
+            "logger"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "ExecuteAsync",
+          "params": [
+            "stoppingToken"
+          ],
+          "returnType": "Task",
+          "exported": false,
+          "lineCount": 11
+        }
+      ],
+      "classes": [
+        {
+          "name": "Worker",
+          "methods": [
+            "Worker",
+            "ExecuteAsync"
+          ],
+          "properties": [
+            "_logger"
+          ],
+          "exported": true,
+          "lineCount": 21
+        }
+      ],
+      "imports": [],
+      "exports": [
+        "Worker",
+        "Worker"
+      ],
+      "totalLines": 24,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/angular.json": {
+      "filePath": "src/frontend/cloudshift-ui/angular.json",
+      "contentHash": "cb5b31087ecdfa13cdacf0251065b2be1d628a5f46aff25a61c18e6fdc6b6c32",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 102,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/package.json": {
+      "filePath": "src/frontend/cloudshift-ui/package.json",
+      "contentHash": "198a5d643086a23b55e608877d3637d4fe126336a0038c8ddcf5543dbb6c0a08",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 39,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/README.md": {
+      "filePath": "src/frontend/cloudshift-ui/README.md",
+      "contentHash": "f363e9a07912c64dd00595dc0d08e11dd474948408cc399ee4d7c4a0cf7d9f3b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 28,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/app.component.html": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/app.component.html",
+      "contentHash": "755a02fc4ab6fd4c1837abed71ce8fcd51337c28aa505a33fb22b17c026093f6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 3,
+      "hasStructuralAnalysis": false
+    },
+    "src/frontend/cloudshift-ui/src/app/app.component.scss": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/app.component.scss",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": false
+    },
+    "src/frontend/cloudshift-ui/src/app/app.component.spec.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/app.component.spec.ts",
+      "contentHash": "f8c4585a097799b8a92a4879e38de5b4d7700e4f85a23faf4d374674e675e69d",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@angular/core/testing",
+          "specifiers": [
+            "TestBed"
+          ]
+        },
+        {
+          "source": "./app.component",
+          "specifiers": [
+            "AppComponent"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 30,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/app.component.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/app.component.ts",
+      "contentHash": "3ae20b7983bd61576d26f3cc506ad916ba7f44cf10160e851e968dc86771f129",
+      "functions": [],
+      "classes": [
+        {
+          "name": "AppComponent",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 1
+        }
+      ],
+      "imports": [
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "Component"
+          ]
+        },
+        {
+          "source": "@angular/router",
+          "specifiers": [
+            "RouterOutlet"
+          ]
+        }
+      ],
+      "exports": [
+        "AppComponent"
+      ],
+      "totalLines": 12,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/app.config.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/app.config.ts",
+      "contentHash": "2c90dd733a204c0d15b576558142fe92b9176baaf3df455605934b8feec28952",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "ApplicationConfig"
+          ]
+        },
+        {
+          "source": "@angular/router",
+          "specifiers": [
+            "provideRouter",
+            "withComponentInputBinding"
+          ]
+        },
+        {
+          "source": "@angular/platform-browser/animations",
+          "specifiers": [
+            "provideAnimations"
+          ]
+        },
+        {
+          "source": "@angular/common/http",
+          "specifiers": [
+            "provideHttpClient"
+          ]
+        },
+        {
+          "source": "./app.routes",
+          "specifiers": [
+            "routes"
+          ]
+        }
+      ],
+      "exports": [
+        "appConfig"
+      ],
+      "totalLines": 15,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/app.routes.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/app.routes.ts",
+      "contentHash": "1cdfb6bd2a126e815d39a33d1982de9da6fb63ea8a4aab27418ed3faf308c57c",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@angular/router",
+          "specifiers": [
+            "Routes"
+          ]
+        },
+        {
+          "source": "./core/layout/shell/shell.component",
+          "specifiers": [
+            "ShellComponent"
+          ]
+        }
+      ],
+      "exports": [
+        "routes"
+      ],
+      "totalLines": 51,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/core/layout/shell/shell.component.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/core/layout/shell/shell.component.ts",
+      "contentHash": "07e90cd8ca6df4618edc341abd697e04ac4bf20e25c519856de22a23835a3038",
+      "functions": [],
+      "classes": [
+        {
+          "name": "ShellComponent",
+          "methods": [
+            "constructor",
+            "toggleSidebar"
+          ],
+          "properties": [
+            "sidebarCollapsed",
+            "mobileMenuOpen",
+            "currentPageTitle"
+          ],
+          "exported": true,
+          "lineCount": 19
+        }
+      ],
+      "imports": [
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "Component",
+            "signal"
+          ]
+        },
+        {
+          "source": "@angular/common",
+          "specifiers": [
+            "CommonModule"
+          ]
+        },
+        {
+          "source": "@angular/router",
+          "specifiers": [
+            "RouterOutlet",
+            "Router",
+            "NavigationEnd"
+          ]
+        },
+        {
+          "source": "rxjs/operators",
+          "specifiers": [
+            "filter"
+          ]
+        },
+        {
+          "source": "../sidebar/sidebar.component",
+          "specifiers": [
+            "SidebarComponent"
+          ]
+        },
+        {
+          "source": "../top-header/top-header.component",
+          "specifiers": [
+            "TopHeaderComponent"
+          ]
+        }
+      ],
+      "exports": [
+        "ShellComponent"
+      ],
+      "totalLines": 97,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/core/layout/sidebar/sidebar.component.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/core/layout/sidebar/sidebar.component.ts",
+      "contentHash": "745877a2dd3021984144004c844c25b007bb18ac3ac9c540f50cb7ba35b3bbc3",
+      "functions": [],
+      "classes": [
+        {
+          "name": "SidebarComponent",
+          "methods": [],
+          "properties": [
+            "collapsed",
+            "navItems"
+          ],
+          "exported": true,
+          "lineCount": 10
+        }
+      ],
+      "imports": [
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "Component",
+            "Input",
+            "Output",
+            "EventEmitter"
+          ]
+        },
+        {
+          "source": "@angular/common",
+          "specifiers": [
+            "CommonModule"
+          ]
+        },
+        {
+          "source": "@angular/router",
+          "specifiers": [
+            "RouterLink",
+            "RouterLinkActive"
+          ]
+        }
+      ],
+      "exports": [
+        "SidebarComponent"
+      ],
+      "totalLines": 256,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/core/layout/top-header/top-header.component.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/core/layout/top-header/top-header.component.ts",
+      "contentHash": "1b762fdc4a1547a30eb696502f57e650f95c18733638f76a3dd75678bcea04fa",
+      "functions": [],
+      "classes": [
+        {
+          "name": "TopHeaderComponent",
+          "methods": [],
+          "properties": [
+            "currentPageTitle",
+            "toggleSidebar"
+          ],
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "imports": [
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "Component",
+            "Input",
+            "Output",
+            "EventEmitter"
+          ]
+        },
+        {
+          "source": "@angular/common",
+          "specifiers": [
+            "CommonModule"
+          ]
+        },
+        {
+          "source": "@angular/router",
+          "specifiers": [
+            "Router",
+            "NavigationEnd"
+          ]
+        },
+        {
+          "source": "rxjs/operators",
+          "specifiers": [
+            "filter",
+            "map"
+          ]
+        }
+      ],
+      "exports": [
+        "TopHeaderComponent"
+      ],
+      "totalLines": 224,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/features/app-profiles/add-profile-modal/add-profile-modal.component.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/features/app-profiles/add-profile-modal/add-profile-modal.component.ts",
+      "contentHash": "1339e8d0771b0c888efbf44bb9cfcee78fe0a847751a601922d4fb9029ef77c1",
+      "functions": [],
+      "classes": [
+        {
+          "name": "AddProfileModalComponent",
+          "methods": [
+            "constructor",
+            "selectProvider",
+            "onSubmit",
+            "onClose"
+          ],
+          "properties": [
+            "isOpen",
+            "close",
+            "profileAdded",
+            "form",
+            "providers"
+          ],
+          "exported": true,
+          "lineCount": 44
+        }
+      ],
+      "imports": [
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "Component",
+            "Input",
+            "Output",
+            "EventEmitter"
+          ]
+        },
+        {
+          "source": "@angular/common",
+          "specifiers": [
+            "CommonModule"
+          ]
+        },
+        {
+          "source": "@angular/forms",
+          "specifiers": [
+            "ReactiveFormsModule",
+            "FormBuilder",
+            "FormGroup",
+            "Validators"
+          ]
+        },
+        {
+          "source": "../../../shared/components/modal/modal.component",
+          "specifiers": [
+            "ModalComponent"
+          ]
+        },
+        {
+          "source": "../../../models/app-profile.model",
+          "specifiers": [
+            "CloudProvider"
+          ]
+        },
+        {
+          "source": "../../../services/cloudshift-api.service",
+          "specifiers": [
+            "AddProfileFormValue"
+          ]
+        }
+      ],
+      "exports": [
+        "AddProfileModalComponent"
+      ],
+      "totalLines": 265,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/features/app-profiles/app-profiles.component.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/features/app-profiles/app-profiles.component.ts",
+      "contentHash": "e1462b613a20874adff2e2b489b2af7c1230cd9d0d7fdaeeb8995414b8fe11eb",
+      "functions": [],
+      "classes": [
+        {
+          "name": "AppProfilesComponent",
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "filteredProfiles",
+            "totalStorageGB",
+            "activeCount",
+            "errorCount",
+            "getFilterCount",
+            "refresh",
+            "onProfileAdded"
+          ],
+          "properties": [
+            "profiles",
+            "searchQuery",
+            "activeFilter",
+            "viewMode",
+            "showAddModal",
+            "statusFilters"
+          ],
+          "exported": true,
+          "lineCount": 64
+        }
+      ],
+      "imports": [
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "Component",
+            "OnInit",
+            "signal"
+          ]
+        },
+        {
+          "source": "@angular/common",
+          "specifiers": [
+            "CommonModule"
+          ]
+        },
+        {
+          "source": "@angular/forms",
+          "specifiers": [
+            "FormsModule"
+          ]
+        },
+        {
+          "source": "../../services/cloudshift-api.service",
+          "specifiers": [
+            "AddProfileFormValue",
+            "CloudShiftApiService"
+          ]
+        },
+        {
+          "source": "../../models/app-profile.model",
+          "specifiers": [
+            "IAppProfile"
+          ]
+        },
+        {
+          "source": "./profile-card/profile-card.component",
+          "specifiers": [
+            "ProfileCardComponent"
+          ]
+        },
+        {
+          "source": "./add-profile-modal/add-profile-modal.component",
+          "specifiers": [
+            "AddProfileModalComponent"
+          ]
+        },
+        {
+          "source": "../../shared/components/status-badge/status-badge.component",
+          "specifiers": [
+            "StatusBadgeComponent"
+          ]
+        }
+      ],
+      "exports": [
+        "AppProfilesComponent"
+      ],
+      "totalLines": 386,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/features/app-profiles/profile-card/profile-card.component.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/features/app-profiles/profile-card/profile-card.component.ts",
+      "contentHash": "c9640ea2a60e4039d006e673e89c13dad05ac08a56c41c33882041c8325951c5",
+      "functions": [],
+      "classes": [
+        {
+          "name": "ProfileCardComponent",
+          "methods": [
+            "storagePercent",
+            "providerIcon"
+          ],
+          "properties": [
+            "profile"
+          ],
+          "exported": true,
+          "lineCount": 20
+        }
+      ],
+      "imports": [
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "Component",
+            "Input"
+          ]
+        },
+        {
+          "source": "@angular/common",
+          "specifiers": [
+            "CommonModule"
+          ]
+        },
+        {
+          "source": "../../../models/app-profile.model",
+          "specifiers": [
+            "IAppProfile",
+            "CloudProvider"
+          ]
+        },
+        {
+          "source": "../../../shared/components/status-badge/status-badge.component",
+          "specifiers": [
+            "StatusBadgeComponent"
+          ]
+        },
+        {
+          "source": "../../../shared/components/progress-bar/progress-bar.component",
+          "specifiers": [
+            "ProgressBarComponent"
+          ]
+        }
+      ],
+      "exports": [
+        "ProfileCardComponent"
+      ],
+      "totalLines": 199,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/features/dashboard/dashboard.component.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/features/dashboard/dashboard.component.ts",
+      "contentHash": "5a05031db6c9e356a4e8f40fca49d004a2760a2626d9c4057f9bb64ad67f3b78",
+      "functions": [],
+      "classes": [
+        {
+          "name": "DashboardComponent",
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "reload",
+            "ngOnDestroy",
+            "formatSize"
+          ],
+          "properties": [
+            "stats",
+            "logEntries",
+            "activeJobs",
+            "lastUpdated",
+            "intervalId"
+          ],
+          "exported": true,
+          "lineCount": 52
+        }
+      ],
+      "imports": [
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "Component",
+            "OnInit",
+            "OnDestroy"
+          ]
+        },
+        {
+          "source": "@angular/common",
+          "specifiers": [
+            "CommonModule"
+          ]
+        },
+        {
+          "source": "../../services/cloudshift-api.service",
+          "specifiers": [
+            "CloudShiftApiService"
+          ]
+        },
+        {
+          "source": "../../models/dashboard.model",
+          "specifiers": [
+            "IDashboardStats",
+            "IFileLogEntry"
+          ]
+        },
+        {
+          "source": "../../models/migration-job.model",
+          "specifiers": [
+            "IMigrationJob"
+          ]
+        },
+        {
+          "source": "../../shared/components/stat-card/stat-card.component",
+          "specifiers": [
+            "StatCardComponent"
+          ]
+        },
+        {
+          "source": "../../shared/components/status-badge/status-badge.component",
+          "specifiers": [
+            "StatusBadgeComponent"
+          ]
+        },
+        {
+          "source": "../../shared/components/progress-bar/progress-bar.component",
+          "specifiers": [
+            "ProgressBarComponent"
+          ]
+        }
+      ],
+      "exports": [
+        "DashboardComponent"
+      ],
+      "totalLines": 364,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/features/migration-jobs/migration-jobs.component.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/features/migration-jobs/migration-jobs.component.ts",
+      "contentHash": "e1249d9fd27da191a8ab03290ef2e694fcfcb56a5f1a2b976263b8d754800131",
+      "functions": [],
+      "classes": [
+        {
+          "name": "MigrationJobsComponent",
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "loadJobs",
+            "filteredJobs",
+            "getCount"
+          ],
+          "properties": [
+            "jobs",
+            "searchQuery",
+            "activeFilter",
+            "sortBy",
+            "statusFilters"
+          ],
+          "exported": true,
+          "lineCount": 42
+        }
+      ],
+      "imports": [
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "Component",
+            "OnInit"
+          ]
+        },
+        {
+          "source": "@angular/common",
+          "specifiers": [
+            "CommonModule"
+          ]
+        },
+        {
+          "source": "@angular/forms",
+          "specifiers": [
+            "FormsModule"
+          ]
+        },
+        {
+          "source": "../../services/cloudshift-api.service",
+          "specifiers": [
+            "CloudShiftApiService"
+          ]
+        },
+        {
+          "source": "../../models/migration-job.model",
+          "specifiers": [
+            "IMigrationJob",
+            "JobStatus"
+          ]
+        },
+        {
+          "source": "../../shared/components/status-badge/status-badge.component",
+          "specifiers": [
+            "StatusBadgeComponent"
+          ]
+        },
+        {
+          "source": "../../shared/components/progress-bar/progress-bar.component",
+          "specifiers": [
+            "ProgressBarComponent"
+          ]
+        }
+      ],
+      "exports": [
+        "MigrationJobsComponent"
+      ],
+      "totalLines": 429,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/features/project-mapping/project-mapping.component.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/features/project-mapping/project-mapping.component.ts",
+      "contentHash": "7700427c334dfd09aa2e6ffe1419025cf8239e49ab1395042955a0ef2f8ceb17",
+      "functions": [],
+      "classes": [
+        {
+          "name": "ProjectMappingComponent",
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "loadMappings",
+            "loadProfiles",
+            "addFilter",
+            "removeFilter",
+            "saveDraft",
+            "createMapping",
+            "runMapping"
+          ],
+          "properties": [
+            "mappings",
+            "appProfiles",
+            "showCreateForm",
+            "newMapping",
+            "jobTypes",
+            "defaultRules",
+            "booleanOptions"
+          ],
+          "exported": true,
+          "lineCount": 98
+        }
+      ],
+      "imports": [
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "Component",
+            "OnInit",
+            "signal"
+          ]
+        },
+        {
+          "source": "@angular/common",
+          "specifiers": [
+            "CommonModule"
+          ]
+        },
+        {
+          "source": "@angular/router",
+          "specifiers": [
+            "RouterLink"
+          ]
+        },
+        {
+          "source": "../../services/cloudshift-api.service",
+          "specifiers": [
+            "CloudShiftApiService",
+            "CreateMappingFormValue"
+          ]
+        },
+        {
+          "source": "../../models/app-profile.model",
+          "specifiers": [
+            "IAppProfile"
+          ]
+        },
+        {
+          "source": "../../models/project-mapping.model",
+          "specifiers": [
+            "IPathFilter",
+            "IProjectMapping"
+          ]
+        },
+        {
+          "source": "../../shared/components/status-badge/status-badge.component",
+          "specifiers": [
+            "StatusBadgeComponent"
+          ]
+        },
+        {
+          "source": "@angular/forms",
+          "specifiers": [
+            "FormsModule"
+          ]
+        }
+      ],
+      "exports": [
+        "ProjectMappingComponent"
+      ],
+      "totalLines": 735,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/features/settings/settings.component.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/features/settings/settings.component.ts",
+      "contentHash": "1324200d8a15b3ef7bc25fb738a647b9f212b09a54154cad659382afa125bd26",
+      "functions": [],
+      "classes": [
+        {
+          "name": "SettingsComponent",
+          "methods": [],
+          "properties": [
+            "activeSection",
+            "sections",
+            "notifications"
+          ],
+          "exported": true,
+          "lineCount": 17
+        }
+      ],
+      "imports": [
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "Component"
+          ]
+        },
+        {
+          "source": "@angular/common",
+          "specifiers": [
+            "CommonModule"
+          ]
+        }
+      ],
+      "exports": [
+        "SettingsComponent"
+      ],
+      "totalLines": 330,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/models/app-profile.model.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/models/app-profile.model.ts",
+      "contentHash": "98d7650574da2dabae706369b231fee6dddb17b80ffdf5b5682484372c2abc25",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 24,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/models/dashboard.model.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/models/dashboard.model.ts",
+      "contentHash": "9a3f13ccbeb66aa9489cb19a772568fc20358c29774b56ff1471bedfea7eb44c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 20,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/models/migration-job.model.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/models/migration-job.model.ts",
+      "contentHash": "4bef1e0047f4b68079f93a5200cf7e75d3b31295e5bb53ebc8977564a0eb0d74",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 24,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/models/project-mapping.model.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/models/project-mapping.model.ts",
+      "contentHash": "60d2c323abb007bfe66c7f4512623b73d63fabeec0171439eed7879b313c3c5b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 42,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/services/cloudshift-api.service.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/services/cloudshift-api.service.ts",
+      "contentHash": "6445a681a2bb789e56b97e2155a868b50c05163914093637730a1361629ebcf2",
+      "functions": [],
+      "classes": [
+        {
+          "name": "CloudShiftApiService",
+          "methods": [
+            "constructor",
+            "getAppProfiles",
+            "addAppProfile",
+            "getProjectMappings",
+            "createProjectMapping",
+            "startMigration",
+            "getMigrationJobs",
+            "getDashboardStats",
+            "getFileLogEntries",
+            "mapProfile",
+            "mapProjectMapping",
+            "mapMigrationJob",
+            "toProviderValue",
+            "toProviderSlug",
+            "providerLabel",
+            "toJobStatus",
+            "toFilterConfig",
+            "fromFilterConfig"
+          ],
+          "properties": [
+            "userId"
+          ],
+          "exported": true,
+          "lineCount": 228
+        }
+      ],
+      "imports": [
+        {
+          "source": "@angular/common/http",
+          "specifiers": [
+            "HttpClient"
+          ]
+        },
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "Injectable"
+          ]
+        },
+        {
+          "source": "rxjs",
+          "specifiers": [
+            "map",
+            "Observable"
+          ]
+        },
+        {
+          "source": "../models/app-profile.model",
+          "specifiers": [
+            "IAppProfile"
+          ]
+        },
+        {
+          "source": "../models/migration-job.model",
+          "specifiers": [
+            "IMigrationJob"
+          ]
+        },
+        {
+          "source": "../models/project-mapping.model",
+          "specifiers": [
+            "IPathFilter",
+            "IProjectMapping"
+          ]
+        },
+        {
+          "source": "../models/dashboard.model",
+          "specifiers": [
+            "IDashboardStats",
+            "IFileLogEntry"
+          ]
+        }
+      ],
+      "exports": [
+        "CloudShiftApiService"
+      ],
+      "totalLines": 336,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/services/mock-data.service.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/services/mock-data.service.ts",
+      "contentHash": "48b73b6d24c57d4ff8ef76aadbc1cdf4402f86f35882059984b3ec169451fb29",
+      "functions": [],
+      "classes": [
+        {
+          "name": "MockDataService",
+          "methods": [
+            "getAppProfiles",
+            "getMigrationJobs",
+            "getProjectMappings",
+            "getDashboardStats",
+            "getFileLogEntries"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 315
+        }
+      ],
+      "imports": [
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "Injectable"
+          ]
+        },
+        {
+          "source": "../models/app-profile.model",
+          "specifiers": [
+            "IAppProfile"
+          ]
+        },
+        {
+          "source": "../models/migration-job.model",
+          "specifiers": [
+            "IMigrationJob"
+          ]
+        },
+        {
+          "source": "../models/project-mapping.model",
+          "specifiers": [
+            "IProjectMapping"
+          ]
+        },
+        {
+          "source": "../models/dashboard.model",
+          "specifiers": [
+            "IDashboardStats",
+            "IFileLogEntry"
+          ]
+        }
+      ],
+      "exports": [
+        "MockDataService"
+      ],
+      "totalLines": 323,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/shared/components/modal/modal.component.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/shared/components/modal/modal.component.ts",
+      "contentHash": "5833b3fed297f01fa101fd59606cde7feead14a0af5b5d26ac8bac749fd9cc2f",
+      "functions": [],
+      "classes": [
+        {
+          "name": "ModalComponent",
+          "methods": [
+            "onOverlayClick",
+            "onEscape"
+          ],
+          "properties": [
+            "title",
+            "isOpen",
+            "maxWidth",
+            "showFooter",
+            "close"
+          ],
+          "exported": true,
+          "lineCount": 18
+        }
+      ],
+      "imports": [
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "Component",
+            "Input",
+            "Output",
+            "EventEmitter",
+            "HostListener"
+          ]
+        },
+        {
+          "source": "@angular/common",
+          "specifiers": [
+            "CommonModule"
+          ]
+        }
+      ],
+      "exports": [
+        "ModalComponent"
+      ],
+      "totalLines": 124,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/shared/components/progress-bar/progress-bar.component.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/shared/components/progress-bar/progress-bar.component.ts",
+      "contentHash": "ddaf8b3087c1e07ef72682b51f6296d34d004a613bd54695ccf233c2ef43862c",
+      "functions": [],
+      "classes": [
+        {
+          "name": "ProgressBarComponent",
+          "methods": [
+            "colorClass"
+          ],
+          "properties": [
+            "value",
+            "label",
+            "showLabel",
+            "metaLeft",
+            "metaRight",
+            "variant"
+          ],
+          "exported": true,
+          "lineCount": 14
+        }
+      ],
+      "imports": [
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "Component",
+            "Input",
+            "OnChanges"
+          ]
+        },
+        {
+          "source": "@angular/common",
+          "specifiers": [
+            "CommonModule"
+          ]
+        }
+      ],
+      "exports": [
+        "ProgressBarComponent"
+      ],
+      "totalLines": 75,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/shared/components/stat-card/stat-card.component.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/shared/components/stat-card/stat-card.component.ts",
+      "contentHash": "71c9493ea17b7def287663ee94098d85d1bbad4c88b4fe3218413b494f40598f",
+      "functions": [],
+      "classes": [
+        {
+          "name": "StatCardComponent",
+          "methods": [],
+          "properties": [
+            "title",
+            "value",
+            "icon",
+            "iconColor",
+            "trend"
+          ],
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "imports": [
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "Component",
+            "Input"
+          ]
+        },
+        {
+          "source": "@angular/common",
+          "specifiers": [
+            "CommonModule"
+          ]
+        }
+      ],
+      "exports": [
+        "StatCardComponent"
+      ],
+      "totalLines": 93,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/app/shared/components/status-badge/status-badge.component.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/app/shared/components/status-badge/status-badge.component.ts",
+      "contentHash": "14153981556e1612c280798bcda3211ecefeb69ce16aba87f507a4c62c6e9730",
+      "functions": [],
+      "classes": [
+        {
+          "name": "StatusBadgeComponent",
+          "methods": [
+            "statusLabel"
+          ],
+          "properties": [
+            "status",
+            "label"
+          ],
+          "exported": true,
+          "lineCount": 14
+        }
+      ],
+      "imports": [
+        {
+          "source": "@angular/core",
+          "specifiers": [
+            "Component",
+            "Input"
+          ]
+        },
+        {
+          "source": "@angular/common",
+          "specifiers": [
+            "CommonModule"
+          ]
+        }
+      ],
+      "exports": [
+        "StatusBadgeComponent"
+      ],
+      "totalLines": 74,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/assets/.gitkeep": {
+      "filePath": "src/frontend/cloudshift-ui/src/assets/.gitkeep",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": false
+    },
+    "src/frontend/cloudshift-ui/src/index.html": {
+      "filePath": "src/frontend/cloudshift-ui/src/index.html",
+      "contentHash": "496f107008d4035194525242c155dcdd03460b4531b8994711921ef0e270266e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 19,
+      "hasStructuralAnalysis": false
+    },
+    "src/frontend/cloudshift-ui/src/main.ts": {
+      "filePath": "src/frontend/cloudshift-ui/src/main.ts",
+      "contentHash": "abed2fcecfc488c97265276567a7eaeac7acb0abf954ab6fd6ccfbab2243b3e5",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@angular/platform-browser",
+          "specifiers": [
+            "bootstrapApplication"
+          ]
+        },
+        {
+          "source": "./app/app.config",
+          "specifiers": [
+            "appConfig"
+          ]
+        },
+        {
+          "source": "./app/app.component",
+          "specifiers": [
+            "AppComponent"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 7,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/src/styles.scss": {
+      "filePath": "src/frontend/cloudshift-ui/src/styles.scss",
+      "contentHash": "6ea1548d22a60d114bc0e6ed5a3b9763153bf985e35faf0d7b608a9770b78c3a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 412,
+      "hasStructuralAnalysis": false
+    },
+    "src/frontend/cloudshift-ui/tsconfig.app.json": {
+      "filePath": "src/frontend/cloudshift-ui/tsconfig.app.json",
+      "contentHash": "c0f5f7d870451b924e34c7787fc12763cfe29e0ffe1f155a0b488f319fa10fdd",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 15,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/tsconfig.json": {
+      "filePath": "src/frontend/cloudshift-ui/tsconfig.json",
+      "contentHash": "eeab55b0ea2b57184b8317262207d3cdb20d933d28c0c8b00f8ed9012ac770be",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 33,
+      "hasStructuralAnalysis": true
+    },
+    "src/frontend/cloudshift-ui/tsconfig.spec.json": {
+      "filePath": "src/frontend/cloudshift-ui/tsconfig.spec.json",
+      "contentHash": "2897e7aa4124f25ff5b90b2fdebae1441bc18a9e37ac6fa59fe37ba69c063232",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 15,
+      "hasStructuralAnalysis": true
+    }
+  }
+}
